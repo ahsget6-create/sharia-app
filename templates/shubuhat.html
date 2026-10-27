@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المرئيات وقوائم التشغيل - متون طالب العلم</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #111827;
+            --primary-blue: #0ea5e9;
+            --primary-teal: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            direction: rtl;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto 24px auto;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 1.15rem;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .playlist-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .playlist-card:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .playlist-toggle {
+            padding: 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #38bdf8;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            user-select: none;
+        }
+
+        .playlist-toggle span.sub-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-right: 10px;
+        }
+
+        .playlist-content {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease;
+            background: rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 0 14px;
+            border-top: 1px solid transparent;
+        }
+
+        .playlist-card.active .playlist-content {
+            max-height: 12000px;
+            opacity: 1;
+            padding: 14px;
+            border-top-color: var(--border-color);
+        }
+
+        .video-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .video-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">➡️ الرئيسية</a>
+        <h1>🎥 الشبهات والردود</h1>
+    </header>
+
+    <div class="container">
+        <p class="section-desc">في هذه الصفحة يتم عرض قوائم تشغيل ردود أهل العلم على أبرز الشبهات...</p>
+
+        <!-- 1. سلسلة متعصبة المذاهب -->
+        <div class="playlist-card">
+            <div class="playlist-toggle" onclick="togglePlaylist(this)">
+                <div>
+                    <span>سلسلة متعصبة المذاهب </span>
+                    <span class="sub-title">(فضيلة الشيخ أ.د. عبدالعزيز الريس)</span>
+                </div>
+                <span>➕</span>
+            </div>
+            <div class="playlist-content">
+                <div class="video-box">
+                    <div class="video-title"><span>▶</span> كشف شبهات متعصبة المذاهب ورد أئمة الدعوة النجدية عليها</div>
+                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/mUB9CyCGqoM" allowfullscreen></iframe></div>
+                </div>
+                <div class="video-box">
+                    <div class="video-title"><span>▶</span> أقوال النبلاء في نسف متعصبة المذاهب الجهلاء</div>
+                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/N21X6Bs0BB4" allowfullscreen></iframe></div>
+                </div>
+                <div class="video-box">
+                    <div class="video-title"><span>▶</span> متعصبة المذاهب بين الإفراط والتفريط</div>
+                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/Zrt92XjyuWg" allowfullscreen></iframe></div>
+                </div>
+                <div class="video-box">
+                    <div class="video-title"><span>▶</span> يشترط متعصبة المذاهب شروطا للاجتهاد لم توجد في أئمتهم!</div>
+                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/LIFySpBegPU" allowfullscreen></iframe></div>
+                </div>
+                <div class="video-box">
+                    <div class="video-title"><span>▶</span> يلزم متعصبة المذاهب ألا يدرسوا أصول الفقه!</div>
+                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/c18QQM4_HPI" allowfullscreen></iframe></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playlist-card">
+            <div class="playlist-toggle" onclick="togglePlaylist(this)">
+                <div>
+                    <span>الرد على اهل البدع</span>
+                    <span class="sub-title">(مجموعة من اهل العلم)</span>
+                </div>
+                <span>➕</span>
+            </div>
+            <div class="playlist-content">
+                <div class="video-box"><div class="video-title"><span>▶</span> فتوى العلامة الفوزان في الرد على المبتدعة</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ZaSZvEDSVng" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 2 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> فتوى الشيخ صالح ال الشيخ في الرد على الصوفيين</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/V2zoHxTF2oc" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 3 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> ضوابط التبديع للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/HT2sBnsc5go" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 4 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> التفريق بين الثناء على المبتدع والثناء على البدعة للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/paOYgu8Od_A" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 5 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> نماذج من استعداء السلف للسلطان على اهل البدع لحماية الدين الشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/_7f659kXPTI" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 6 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> رأي الشيخ عبدالعزيز الريس في مناظرة ومجادلة اهل البدع</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/JkgysIGp7v8" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 7 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> وجوب الشدة على اهل البدع بالاجماع للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/rMB2grnNrDY" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 8 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> من اخطاء المميعة طلب العلم عند اهل البدع للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/-LxT_VvFOVU" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 9 -->
+                <div class="video-box"><div class="video-title"><span>▶</span>سبب عدم ذكر حسنات اهل البدع للشيخ عبدالعيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/02Gz_EPbsEI" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 10 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> فوائد الرد على المبتدعة وذكرهم بالاسماء للشيخ عبدالعزيز ب ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/9AWgJ5s0dR0" allowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+        <!-- 3. السلسلة الثالثة (مجهزة بـ 10 خانات) -->
+        <div class="playlist-card">
+            <div class="playlist-toggle" onclick="togglePlaylist(this)">
+                <div>
+                    <span>عنوان السلسلة الثالثة</span>
+                    <span class="sub-title">(اسم الشيخ)</span>
+                </div>
+                <span>➕</span>
+            </div>
+            <div class="playlist-content">
+                <!-- الفيديو 1 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 1</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 2 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 2</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 3 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 3</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 4 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 4</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 5 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 5</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 6 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 6</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 7 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 7</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 8 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 8</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 9 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 9</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 10 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 10</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+        <!-- 4. السلسلة الرابعة (مجهزة بـ 10 خانات) -->
+        <div class="playlist-card">
+            <div class="playlist-toggle" onclick="togglePlaylist(this)">
+                <div>
+                    <span>عنوان السلسلة الرابعة</span>
+                    <span class="sub-title">(اسم الشيخ)</span>
+                </div>
+                <span>➕</span>
+            </div>
+            <div class="playlist-content">
+                <!-- الفيديو 1 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 1</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 2 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 2</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 3 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 3</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 4 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 4</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 5 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 5</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 6 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 6</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 7 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 7</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 8 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 8</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 9 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 9</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+                <!-- الفيديو 10 -->
+                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 10</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function togglePlaylist(element) {
+            const card = element.parentElement;
+            card.classList.toggle('active');
+            const icon = element.querySelector('span:last-child');
+            icon.innerText = card.classList.contains('active') ? '➖' : '➕';
+        }
+    </script>
+
+</body>
+</html>

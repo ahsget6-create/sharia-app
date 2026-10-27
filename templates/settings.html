@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - متون طالب العلم</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --primary-blue: #0ea5e9;
+            --primary-teal: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --base-font-size: 16px;
+        }
+
+        body.light-mode {
+            --bg-dark: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            direction: rtl;
+            overflow-x: hidden;
+            min-height: 100vh;
+            font-size: var(--base-font-size);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        body.light-mode .back-btn {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+        }
+
+        .header-title h1 {
+            font-size: 1.15em;
+            font-weight: 700;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        .settings-group {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .group-title {
+            font-size: 0.95em;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .setting-item:first-of-type {
+            padding-top: 0;
+        }
+
+        .setting-info h3 {
+            font-size: 0.95em;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .setting-info p {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.15);
+            transition: .3s;
+            border-radius: 26px;
+            border: 1px solid var(--border-color);
+        }
+
+        body.light-mode .slider {
+            background-color: rgba(0, 0, 0, 0.15);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-teal));
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .select-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            outline: none;
+            cursor: pointer;
+        }
+
+        body.light-mode .select-box {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .select-box option {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .save-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-teal));
+            color: #000;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-size: 1em;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .save-btn:active {
+            transform: scale(0.98);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary-teal);
+            color: #000;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            font-size: 0.9em;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">➡️ الرئيسية</a>
+        <div class="header-title">
+            <h1>⚙️ إعدادات المنصة</h1>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <div class="settings-group">
+            <div class="group-title">🎨 مظهر وعرض المنصة</div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>الوضع المضيء (Light Mode)</h3>
+                    <p>تغيير مظهر المنصة إلى الوضع الفاتح</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>حجم الخط الافتراضي</h3>
+                    <p>تكبير أو تصغير النصوص والمتون لراحة العين</p>
+                </div>
+                <select class="select-box" id="fontSizeSelect" onchange="changeFontSize()">
+                    <option value="14px">صغير</option>
+                    <option value="16px" selected>متوسط</option>
+                    <option value="19px">كبير</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="group-title">🔔 التنبيهات والمتابعة</div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <h3>تذكير ورد الفجر والمغرب</h3>
+                    <p>تنبيه تلقائي يومي للمراجعة بعد صلاتي الفجر والمغرب</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="notifToggle" onchange="toggleNotifications()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <button class="save-btn" onclick="saveSettings()">💾 حفظ التغييرات</button>
+
+    </main>
+
+    <div class="toast" id="toastBox">✨ تم حفظ الإعدادات بنجاح!</div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+            } else {
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function applyFontSize(size) {
+            document.documentElement.style.setProperty('--base-font-size', size);
+        }
+
+        function changeFontSize() {
+            const size = document.getElementById('fontSizeSelect').value;
+            localStorage.setItem('fontSize', size);
+            applyFontSize(size);
+        }
+
+        function scheduleDailyReminders() {
+            if (!("Notification" in window) || Notification.permission !== "granted") return;
+
+            setInterval(() => {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+
+                if (hours === 5 && minutes === 0) {
+                    new Notification("متون طالب العلم 🌅", {
+                        body: "صباح الخير! حان وقت ورد الحفظ والمراجعة لمتن اليوم.",
+                    });
+                }
+
+                if (hours === 18 && minutes === 30) {
+                    new Notification("متون طالب العلم 🌙", {
+                        body: "تقبل الله طاعتك! لا تنسَ مراجعة ورد المغرب وتثبيت الحفظ.",
+                    });
+                }
+            }, 60000);
+        }
+
+        function toggleNotifications() {
+            const isChecked = document.getElementById('notifToggle').checked;
+            localStorage.setItem('notificationsEnabled', isChecked);
+
+            if (isChecked) {
+                if ("Notification" in window) {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            new Notification("متون طالب العلم 📚", {
+                                body: "تم تفعيل تذكيرات الفجر والمغرب بنجاح!"
+                            });
+                            scheduleDailyReminders();
+                        } else {
+                            alert("يرجى السماح بالإشعارات من إعدادات المتصفح لتتمكن من استلام التذكيرات.");
+                            document.getElementById('notifToggle').checked = false;
+                        }
+                    });
+                } else {
+                    alert("المتصفح الحالي لا يدعم ميزة الإشعارات التلقائية.");
+                }
+            }
+        }
+
+        function saveSettings() {
+            const toast = document.getElementById('toastBox');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeToggle').checked = true;
+            }
+
+            const savedSize = localStorage.getItem('fontSize');
+            if (savedSize) {
+                document.getElementById('fontSizeSelect').value = savedSize;
+                applyFontSize(savedSize);
+            }
+
+            const savedNotif = localStorage.getItem('notificationsEnabled');
+            if (savedNotif !== null) {
+                const isEnabled = (savedNotif === 'true');
+                document.getElementById('notifToggle').checked = isEnabled;
+                if (isEnabled) {
+                    scheduleDailyReminders();
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

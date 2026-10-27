@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة العلوم الشرعية</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --primary-blue: #0ea5e9;
+            --primary-teal: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            direction: rtl;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* --- خلفيات هندسية وفنية زي الصورة --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -80px;
+            left: -80px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* --- Header --- */
+        header {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-brand h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 1.4rem;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .menu-toggle:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Sidebar Navigation --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -310px;
+            width: 290px;
+            height: 100%;
+            background-color: var(--bg-card);
+            color: #ffffff;
+            border-left: 1px solid var(--border-color);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 12px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a:active {
+            background-color: var(--bg-card-hover);
+            color: var(--text-main);
+        }
+
+        .sidebar-menu li a.active-link {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
+        }
+
+        .sidebar-menu .icon {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(9, 13, 22, 0.7);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .main-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 28px 22px;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 140px;
+            height: 140px;
+            border: 2px solid rgba(14, 165, 233, 0.15);
+            border-radius: 50%;
+        }
+
+        .hero-banner h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-banner p {
+            font-size: 0.95rem;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        /* Section Title */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        /* Modern Dark Cards */
+        .app-card {
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            padding: 22px 16px;
+            text-decoration: none;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .app-card:hover, .app-card:active {
+            transform: translateY(-3px);
+            background-color: var(--bg-card-hover);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+        }
+
+        .card-icon-wrapper {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 14px;
+            transition: var(--transition);
+        }
+
+        .app-card.featured .card-icon-wrapper {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .card-title {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 6px;
+        }
+
+        .card-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .custom-shield {
+            width: 28px;
+            height: 28px;
+            fill: #10b981;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-brand">
+            <h1>منصة العلوم الشرعية</h1>
+        </div>
+        <button class="menu-toggle" id="openMenuBtn" aria-label="فتح القائمة">☰</button>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>القائمة الرئيسية</h2>
+            <button class="close-btn" id="closeMenuBtn">&times;</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html" class="active-link"><span class="icon">🏠</span>الرئيسية</a></li>
+            <li><a href="mutun.html"><span class="icon">📖</span>متابعة المتون والقرآن</a></li>
+            <li><a href="schedule.html"><span class="icon">📅</span>جدول الدراسة اليومي</a></li>
+            <li><a href="videos.html"><span class="icon">🎧</span>المستمع الشرعي</a></li>
+            <li>
+                <a href="shubuhat.html">
+                    <span class="icon">
+                        <svg class="custom-shield" style="width:20px; height:20px; fill:#10b981;" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.54-3.09 8.78-7 9.87-3.91-1.09-7-5.33-7-9.87V6.3l7-3.12z"/>
+                        </svg>
+                    </span>
+                    شبهات وردود
+                </a>
+            </li>
+            <li><a href="istifta.html"><span class="icon">❓</span>الاستفتاء والفتوى</a></li>
+            <li><a href="quiz.html"><span class="icon">📝</span>الاختبارات والتقييم</a></li>
+            <li><a href="settings.html"><span class="icon">⚙️</span>الإعدادات</a></li>
+        </ul>
+    </aside>
+
+    <div class="backdrop" id="backdrop"></div>
+
+    <main class="main-container">
+
+        <div class="hero-banner">
+            <h2>مرحباً بك، طالب العلم</h2>
+            <p>اسأل الله لك التوفيق أيها السلفي.. قمت بتطوير هذا الموقع لتسهيل طلب العلم نوعاً ما وإيجاد ردود للشبهات.. اسألكم الدعاء لي بالتوفيق والهداية والغفران 🫂</p>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">اللهم صل وسلم على نبينا محمد</div>
+        </div>
+
+        <div class="dashboard-grid">
+            <a href="mutun.html" class="app-card">
+                <div class="card-icon-wrapper">📖</div>
+                <div class="card-title">المتون</div>
+                <div class="card-desc">حفظ ومراجعة</div>
+            </a>
+
+            <a href="schedule.html" class="app-card">
+                <div class="card-icon-wrapper">📅</div>
+                <div class="card-title">الجدول</div>
+                <div class="card-desc">تنظيم الخطط</div>
+            </a>
+
+            <a href="videos.html" class="app-card">
+                <div class="card-icon-wrapper">🎧</div>
+                <div class="card-title">الدروس</div>
+                <div class="card-desc">استماع وشروح</div>
+            </a>
+
+            <a href="shubuhat.html" class="app-card featured">
+                <div class="card-icon-wrapper">
+                    <svg class="custom-shield" viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.54-3.09 8.78-7 9.87-3.91-1.09-7-5.33-7-9.87V6.3l7-3.12z"/>
+                    </svg>
+                </div>
+                <div class="card-title">شبهات وردود</div>
+                <div class="card-desc">ردود ودفع الشبهات</div>
+            </a>
+
+
+            <a href="quiz.html" class="app-card">
+                <div class="card-icon-wrapper">📝</div>
+                <div class="card-title">الاختبارات</div>
+                <div class="card-desc">تقييم التحصيل</div>
+            </a>
+
+            <a href="settings.html" class="app-card">
+                <div class="card-icon-wrapper">⚙️</div>
+                <div class="card-title">الإعدادات</div>
+                <div class="card-desc">تخصيص الواجهة</div>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        const openMenuBtn = document.getElementById('openMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('backdrop');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            backdrop.classList.toggle('active');
+        }
+
+        openMenuBtn.addEventListener('click', toggleSidebar);
+        closeMenuBtn.addEventListener('click', toggleSidebar);
+        backdrop.addEventListener('click', toggleSidebar);
+    </script>
+
+</body>
+</html>

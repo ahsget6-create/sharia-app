@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول وحطة الحفظ - متون طالب العلم</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --primary-blue: #0ea5e9;
+            --primary-teal: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            direction: rtl;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Main Container --- */
+        .main-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        /* Hero Card */
+        .page-hero {
+            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .page-hero h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+        }
+
+        .page-hero p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- Schedule Section --- */
+        .plan-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .plan-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .plan-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        .plan-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* Table Styling */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            padding: 10px 12px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            color: #f1f5f9;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-level {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="mutun.html" class="back-btn">➡️ قائمة المتون</a>
+        <div class="header-title">
+            <h1>🗓️ جدول خطة الحفظ</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Hero -->
+        <div class="page-hero">
+            <h2>جداول مقترحة لضبط المتون</h2>
+            <p>الجداول والخطط المنهجية المعتمدة لترتيب أوقات الحفظ والمراجعة لمتون طالب العلم، مصممة بعناية لتناسب مختلف الأوقات.</p>
+        </div>
+
+        <!-- Plan 1: Intensive Plan -->
+        <div class="plan-section">
+            <div class="plan-header">
+                <h3>⚡ الخطة المكثفة (للمتفرغين)</h3>
+            </div>
+            <p class="plan-desc">خطة زمنية مقترحة لإنهاء المستويات الخمسة (18 متناً) خلال سنة دراسية واحدة مع التركيز على المراجعة المستمرة.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المستوى</th>
+                            <th>المدة المقترحة</th>
+                            <th>المنهجية</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge-level">المستوى 1</span></td>
+                            <td>شهر ونصف</td>
+                            <td>حفظ المتون الأربعة الأولى بمعدل متن لكل أسبوعين.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-level">المستوى 2</span></td>
+                            <td>شهرين</td>
+                            <td>حفظ المتون الأربعة مع العناية بالأصول والأدلة.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-level">المستوى 3</span></td>
+                            <td>شهرين ونصف</td>
+                            <td>التعامل مع المتون المتوسطة وضبط قواعدها.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-level">المستوى 4 & 5</span></td>
+                            <td>أربعة أشهر</td>
+                            <td>ختم المتون المتقدمة في الفقه والحديث والاصول.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Plan 2: Flexible Plan -->
+        <div class="plan-section">
+            <div class="plan-header">
+                <h3>🌱 الخطة الميسرة (للمشغولين والطلاب)</h3>
+            </div>
+            <p class="plan-desc">خطة مرنة تناسب أصحاب الارتباطات الدراسية أو الوظيفية، تعتمد على التؤدة وإتقان القليل الدائم.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المستوى</th>
+                            <th>المدة المقترحة</th>
+                            <th>المنهجية</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="badge-level">المستوى الأول</span></td>
+                            <td>شهرين إلى 3 أشهر</td>
+                            <td>متن واحد كل 3 أسابيع لضمان التثبيت مع المدرسة.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="badge-level">باقي المستويات</span></td>
+                            <td>حسب الظروف</td>
+                            <td>أخذ استراحة قصيرة بعد كل مستوى للمراجعة التامة.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

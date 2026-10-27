@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاختبارات والتقييمات - متون طالب العلم</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --primary-blue: #0ea5e9;
+            --primary-teal: #10b981;
+            --danger-red: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            direction: rtl;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Main Container --- */
+        .main-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        /* Hero Card */
+        .page-hero {
+            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .page-hero h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+        }
+
+        .page-hero p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- Quiz Card --- */
+        .quiz-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-teal));
+            transition: width 0.3s ease;
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 14px 16px;
+            border-radius: 14px;
+            text-align: right;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: var(--bg-card-hover);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .option-btn.correct {
+            background: rgba(16, 185, 129, 0.15) !important;
+            border-color: var(--primary-teal) !important;
+            color: #34d399 !important;
+            font-weight: 600;
+        }
+
+        .option-btn.wrong {
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: var(--danger-red) !important;
+            color: #fca5a5 !important;
+        }
+
+        .action-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--primary-teal));
+            color: #000;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: none;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* --- Result Screen --- */
+        .result-box {
+            text-align: center;
+            display: none;
+            padding: 20px 10px;
+        }
+
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 14px 0;
+        }
+
+        .result-message {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .restart-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .restart-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="mutun.html" class="back-btn">➡️ قائمة المتون</a>
+        <div class="header-title">
+            <h1>📝 اختبارات واستذكار</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Hero -->
+        <div class="page-hero">
+            <h2>اختبر حفظك وفهمك</h2>
+            <p>تقييمات سريعة وتفاعلية لمراجعة وتثبيت المسائل العلمية الضابطة للمتون المدروسة.</p>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-card" id="quizCard">
+            
+            <div id="quizSection">
+                <div class="quiz-progress">
+                    <span id="questionCount">السؤال 1 من 3</span>
+                    <span id="scoreTracker">النقاط: 0</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+
+                <h3 class="question-title" id="questionText">جاري تحميل السؤال...</h3>
+
+                <div class="options-container" id="optionsContainer">
+                    <!-- Options inserted via JS -->
+                </div>
+
+                <button class="action-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ⬅️</button>
+            </div>
+
+            <!-- Result Box -->
+            <div class="result-box" id="resultBox">
+                <h2>🎉 اكتمل الاختبار!</h2>
+                <div class="result-score" id="finalScore">0 / 0</div>
+                <p class="result-message" id="resultMessage">أحسنت! استمر في التثبيت والمراجعة لتصل للإتقان التام.</p>
+                <button class="restart-btn" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
+            </div>
+
+        </div>
+
+    </main>
+<script>
+    const questions = [
+        {
+            question: "في متن ثلاثة الأصول، ما هو الدليل السمعي الذي استدل به المصنف على وجوب معرفة العبد لربه؟",
+            options: [
+                "قوله تعالى: ﴿الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ﴾",
+                "قوله تعالى: ﴿اعْلَمْ أَنَّهُ لَا إِلَهَ إِلَّا اللَّهُ﴾",
+                "قوله تعالى: ﴿إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالأَرْضِ...﴾",
+                "قوله تعالى: ﴿وَمَا خَلَقْتُ الْجِنَّ وَالإِنسَ إِلاَّ لِيَعْبُدُونِ﴾"
+            ],
+            answer: 0
+        },
+        {
+            question: "ما هي القاعدة الأولى من القواعد الأربع التي ذكرها الإمام محمد بن عبد الوهاب في معرفة شرك أهل الجاهلية؟",
+            options: [
+                "أن الكفار كانوا يعترفون بأن الله هو الخالق الرازق",
+                "أنهم ما دعوهم إلا للصلاح والشفاعة",
+                "أن النبي ﷺ قاتلهم لتفريق الجماع",
+                "أنهم عبدوا أصناماً تنسب لأصنام قوم نوح"
+            ],
+            answer: 0
+        },
+        {
+            question: "وفقاً لمتن نواقض الإسلام، ما حكم من لم يكفر المشركين، أو شك في كفرهم، أو صحح مذهبهم؟",
+            options: ["فاسق ولا يكفر حتى يعلم", "كفر إجماعاً", "يعذر بالجهل مطلقاً", "مبتدع ضال"],
+            answer: 1
+        },
+        {
+            question: "في الحديث التاسع من الأربعين النووية (حديث نهيه ﷺ عن كثرة السؤال والاعتراض): ما القاعدة العظيمة التي أصلها النبي ﷺ فيه؟",
+            options: [
+                "«ما نهيتكم عنه فاجتنبوه، وما أمرتكم به فأتوا منه ما استطعتم»",
+                "«الدين النصيحة»",
+                "«لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه»",
+                "«إنما الأعمال بالنيات»"
+            ],
+            answer: 0
+        },
+        {
+            question: "في كتاب التوحيد، ما باب (قول الله تعالى: ﴿أَيُشْرِكُونَ مَا لَا يَخْلُقُ شَيْئاً وَهُمْ يُخْلَقُونَ﴾) وما وجه الدلالة فيه؟",
+            options: [
+                "إبطال ألوهية من لا يخلق شيئاً وهو مخلوق",
+                "إثبات صفة الخلق لله وحده",
+                "الرد على المعتزلة في أفعال العباد",
+                "بيان أن الملائكة لا يخلقون شيئاً"
+            ],
+            answer: 0
+        },
+        {
+            question: "كم يبلغ عدد شروط الصلاة في متن (شروط الصلاة وأركانها وواجباتها) للإمام محمد بن عبد الوهاب؟",
+            options: ["أربعة شروط", "سبعة شروط", "تسعة شروط", "أحد عشر شرطاً"],
+            answer: 2
+        },
+        {
+            question: "ما هو الركن الأول من أركان الصلاة المذكورة في متن شروط الصلاة؟",
+            options: ["القيام مع القدرة", "تكبيرة الإحرام", "قراءة الفاتحة", "الركوع"],
+            answer: 0
+        },
+        {
+            question: "في متن (كشف الشبهات)، ما هي الشبهة الكبرى التي رد عليها المصنف المتعلقة بدعوى المشركين للأنبياء والصالحين؟",
+            options: [
+                "أنهم أرادوا الشاعة والقربة لا الاستقلال بالخلق",
+                "أنهم يعتقدون أنهم يخلقون مع الله",
+                "أنهم جحود لأنبياء الله تماماً",
+                "أنهم لمบลوا أصناماً بل ملائكة مقربين"
+            ],
+            answer: 0
+        },
+        {
+            question: "في عمدة الأحكام، باب الوضوء: ما هو الحديث الذي أصل فيه النبي ﷺ وجوب إسباغ الوضوء والويل للعقاب من الأقبام؟",
+            options: [
+                "حديث ويل للأعقاب من النار",
+                "حديث عثمان في صفة وضوء النبي ﷺ",
+                "حديث ابن عباس في غسل الوضوء مرة مرة",
+                "حديث السواك ومفاسد تركه"
+            ],
+            answer: 0
+        },
+        {
+            question: "في متن (العقيدة الواسطية)، ما هو المنهج الذي تتبعه الفرقة الناجية (أهل السنة والجماعة) في أسماء الله وصفاته؟",
+            options: [
+                "الإثبات بلا تحريف ولا تعطيل، والتكيف بلا تمثيل",
+                "تأويل النصوص المجملة بما يناسب العقل",
+                "تفويض معاني النصوص مطلقاً دون معرفة",
+                "تشبيه صفات الخالق بصفات المخلوقين"
+            ],
+            answer: 0
+        },
+        {
+            question: "في منظومة البيقونية، ماذا يُعرف (الحديث المرفوع) اصطلاحاً؟",
+            options: [
+                "ما أضيف إلى النبي ﷺ قوتاً أو فعلاً أو تقريراً أو صفة",
+                "ما أضيف إلى الصحابي رضي الله عنه",
+                "ما انقطع إسناده من أوله",
+                "ما رواه العدل الضابط عن مثله"
+            ],
+            answer: 0
+        },
+        {
+            question: "ما هو تعريف (الحديث المرسل) في البيقونية أو المصطلح؟",
+            options: [
+                "ما رفعه التابعي إلى النبي ﷺ محذفاً الصحابي",
+                "ما سقط من إسناده راوٍ واحد في البداية",
+                "ما اتصل إسناده بنقل العدل الضابط",
+                "ما كثر رواته في كل طبقة"
+            ],
+            answer: 0
+        },
+        {
+            question: "في متن (الورقات) لإمام الحرمين الجويني، ما هو أصل الفقه لغة واصطلاحاً؟",
+            options: [
+                "أصل الفقه: أساسه، واصطلاحاً: أدلة الفقه الإجمالية وكيفية الاستدلال بها",
+                "هو معرفة الأحكام الشرعية العملية بأدلتها التفصيلية",
+                "هو الكتاب والسنة والإجماع والقياس",
+                "هو العلم بالأحكام الخمسة مباشرة"
+            ],
+            answer: 0
+        },
+        {
+            question: "في الورقات، ما هو القياس الذي يُعد من أصول الفقه المعتبرة؟",
+            options: [
+                "حمل معلوم على معلوم لشهرتهما",
+                "رد الفرع إلى الأصل بعلة تجمع بينهما في الحكم",
+                "استنباط الحكم بالاستحسان المطلق",
+                "أخذ العرف العام مصدراً مستقلاً"
+            ],
+            answer: 1
+        },
+        {
+            question: "في متن (الآجرومية)، ما هي الأقسام التي ينقسم إليها الكلم بحسب النحو العربي؟",
+            options: [
+                "اسم، وفعل، وحرف جاء لمعنى",
+                "مبتدأ، وخبر، وفاعل، ومفعول",
+                "معرب ومبني فقط",
+                "ماضٍ ومضارع وأمر"
+            ],
+            answer: 0
+        },
+        {
+            question: "في الآجرومية، علامات الاسم المميزة له عن الفعل والحرف تشمل:",
+            options: [
+                "الخفض (الكسرة)، والتنوين، ودخول الألف واللام، وحروف الخفض",
+                "قبول تاء التأنيث الساكنة",
+                "دخول قد والسين وبل",
+                "الجزم والنصب صراحة"
+            ],
+            answer: 0
+        },
+        {
+            question: "في (تحفة الأطفال)، ما هو حكم الإظهار الحلقي في أحكام النون السكنية والتنوين، وكم حروفه؟",
+            options: [
+                "ستة أحرف (ء, هـ, ع, ح, غ, خ) والإظهار بلا غنة كاملة ظاهرة",
+                "أربعة أحرف (يَرْمُلُونَ) بغنة كاملة",
+                "حرف واحد (القلب باء)",
+                "خمسة أحرف للإخفاء الحقيقي"
+            ],
+            answer: 0
+        },
+        {
+            question: "ما هو المد المسمى بـ (المد اللازم الكلمي المثقل) في تحفة الأطفال وتجويد القرآن؟",
+            options: [
+                "أن يأتي بعد حرف المد سكون لازم في كلمة مخففة",
+                "أن يأتي بعد حرف المد سكون لازم مخفف بلا تشديد",
+                "أن يأتي بعد حرف المد حرف مشدد في كلمة واحدة",
+                "أن يمد للزومه عند جميع القراء قصراً"
+            ],
+            answer: 2
+        },
+        {
+            question: "في كتاب (بلوغ المرام)، باب الصيام: ما هو الحديث الوارد في صيام داود عليه السلام وكيف كان؟",
+            options: [
+                "«أفضل الصيام صيام داود؛ كان يصوم يوماً ويفطر يوماً»",
+                "«صيام ثلاثة أيام من كل شهر صيام الدهر كله»",
+                "«صيام يوم عرفة يحتسب على الله سنة وسنة»",
+                "«لا صام من صام الأبد»"
+            ],
+            answer: 0
+        },
+        {
+            question: "في (الرحبية في الفرائض)، من هم أصحاب الفروض الذين يستحقون النصف (1/2) فرضاً؟",
+            options: [
+                "البنت، وبنت الابن، والأخت الشقيقة، والأخت لأب، والزوج عند عدم الولد",
+                "الأم، والجدة، والأخ لأم",
+                "العصبات بالنفس وبالغير",
+                "البنتان والأختان الشقيقتان فصاعداً"
+            ],
+            answer: 0
+        },
+        {
+            question: "في منظومة الرحبية، من هو الوارث الذي يحجب جميع الإخوة والأخوات حجب حرمان مطلق (باستثناء الإخوة لأم بشروط)؟",
+            options: [
+                "الابن وابن الابن وإن نزل، والأب",
+                "الجد فقط دون الأب",
+                "العم الشقيق",
+                "الزوج بالاشتراك مع الأم"
+            ],
+            answer: 0
+        },
+        {
+            question: "في (ألفية ابن مالك)، بماذا تُعرف الكلمة في النحو المذكورة في أول الألفية؟",
+            options: [
+                "«كلامنا لفظ مفيد كاستقيم ... واهتم وكلمة بها كآم»",
+                "«الاسم ما دل على مسمى والفعل زمانه»",
+                "«الحرف ما لا يصح فيه شيء من علامات الاسم والفعل»",
+                "«الإعراب تغيير أواخر الكلم لاختلاف العوامل»"
+            ],
+            answer: 0
+        },
+        {
+            question: "في ألفية ابن مالك، ما هي علامة رفع الفعل المضارع إذا لم يواصبه ناصب ولا جازم؟",
+            options: [
+                "الضمة الظاهرة أو المقدرة، أو ثبوت الننون في الأفعال الخمسة",
+                "السكون دائماً",
+                "الفتحة المقدرة",
+                "حذف حرف العلة"
+            ],
+            answer: 0
+        },
+        {
+            question: "في كتاب التوحيد، باب (من الشرك لبس الحلقة والخيط لدفع البلاء أو رفعه): ما حكم تعليق التمائم والودع؟",
+            options: [
+                "شرك أصغر غالباً، وإن اعتقد أنها تدفع بذاتها فشرك أكبر",
+                "مكروه تحريماً فقط",
+                "مباح إذا كان فيها قرآن كريم",
+                "من خوارق العوائد الجائزة"
+            ],
+            answer: 0
+        },
+        {
+            question: "في ثلاثة الأصول، ما المراد بـ (الدين الإسلامي) الذي هو الأصل الثاني؟",
+            options: [
+                "الاستسلام لله بالتوحيد، والانقياد له بالطاعة، والبراءة من الشرك وأهله",
+                "أداء الصلاة وإيتاء الزكاة فقط",
+                "حفظ المتون الشرعية عن ظهر قلب",
+                "معرفة أحكام الحلال والحرام الفقهية"
+            ],
+            answer: 0
+        },
+        {
+            question: "في البيقونية، ما هو (الحديث الصحيح) باختصار شروطه الستة المعتبرة؟",
+            options: [
+                "ما اتصل إسناده بنقل العدل الضابط عن مثله إلى منتهاه من غير شذوذ ولا علة قادحة",
+                "ما رواه الشيخان ولو انقطع إسناده",
+                "كل حديث حسن سلم من الشذوذ",
+                "ما وافق القياس الصحيح وأجمع عليه العلماء"
+            ],
+            answer: 0
+        },
+        {
+            question: "في الورقات، ما هو تعريف (العام) وما حكمه الأصولي؟",
+            options: [
+                "العام: ما استغرق جميع ما يصلح له وضعاً، وحكمه العمل به حتى يخصه دليل",
+                "العام: ما خص بدليل قطعي",
+                "العام: ما تساوى احتمال معناه وظاهره",
+                "العام: ما دّل على فرد واحد معين"
+            ],
+            answer: 0
+        },
+        {
+            question: "في متن شروط الصلاة، ما حكم من ترك ركناً من أركان الصلاة عمداً أو سهواً؟",
+            options: [
+                "إن كان سهواً وتلذه قام فأت به وبما بعده، وإن ترك تكبيرة الإحرام لم تصح أصلاً",
+                "تصح صلاته ويجب عليه سجود سهو فقط",
+                "تبطل الصلاة مطلقاً في كل الأركان ولا تسقط بالسهو",
+                "يكفيه ستيان قبل السلام"
+            ],
+            answer: 0
+        },
+        {
+            question: "في بلوغ المرام، باب الجنائز: ما حكم الصلاة على الغائب وهل ثبتت عن النبي ﷺ؟",
+            options: [
+                "ثبتت صلاته ﷺ على النجاشي ملك الحبشة، وهي سنة عند موت صالح أو غائب لم يُصْلِّ عليه",
+                "منسوخة بإجماع الخلفاء الراشدين",
+                "مكروهة إلا بأذن الإمام الأعظم",
+                "تختص بالأنبياء فقط"
+            ],
+            answer: 0
+        },
+        {
+            question: "في الآجرومية، الأفعال الثلاثة (ماضٍ، مضارع، أمر) ما هي علامة فعل الأمر المميزة له؟",
+            options: [
+                "دلالته على الطلب بنفسه وقبوله ياء المخاطبة",
+                "قبوله لتاء التأنيث الساكنة",
+                "دخول سين الاستقبال وسوف عليه",
+                "جزمه بلا جازم ظاهر"
+            ],
+            answer: 0
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let answered = false;
+
+    function loadQuestion() {
+        answered = false;
+        const q = questions[currentQuestionIndex];
+
+        // تحديث شريط التقدم والعداد
+        document.getElementById('questionCount').innerText = `السؤال ${currentQuestionIndex + 1} من ${questions.length}`;
+        document.getElementById('scoreTracker').innerText = `النقاط: ${score}`;
+        const progressPercent = ((currentQuestionIndex) / questions.length) * 100;
+        document.getElementById('progressFill').style.width = `${progressPercent}%`;
+
+        // عرض نص السؤال
+        document.getElementById('questionText').innerText = q.question;
+
+        // بناء الخيارات
+        const container = document.getElementById('optionsContainer');
+        container.innerHTML = '';
+        document.getElementById('nextBtn').style.display = 'none';
+
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => selectOption(idx, btn);
+            container.appendChild(btn);
+        });
+    }
+
+    function selectOption(selectedIndex, selectedBtn) {
+        if (answered) return;
+        answered = true;
+
+        const q = questions[currentQuestionIndex];
+        const allBtns = document.querySelectorAll('.option-btn');
+
+        allBtns.forEach(btn => btn.disabled = true);
+
+        if (selectedIndex === q.answer) {
+            selectedBtn.classList.add('correct');
+            score++;
+            document.getElementById('scoreTracker').innerText = `النقاط: ${score}`;
+        } else {
+            selectedBtn.classList.add('wrong');
+            allBtns[q.answer].classList.add('correct');
+        }
+
+        document.getElementById('nextBtn').style.display = 'block';
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        document.getElementById('quizSection').style.display = 'none';
+        document.getElementById('resultBox').style.display = 'block';
+        document.getElementById('finalScore').innerText = `${score} / ${questions.length}`;
+
+        const msg = document.getElementById('resultMessage');
+        if (score === questions.length) {
+            msg.innerText = "⭐ ماشاء الله لا قوة إلا بالله! إجابة كاملة وإتقان تام لمتون طالب العلم، أنت علامة متمكن!";
+        } else if (score >= questions.length / 2) {
+            msg.innerText = "👍 نتيجة رائعة جداً في اختبار عميق وصعب! مستواك العلمي متميز ومتقدم.";
+        } else {
+            msg.innerText = "📚 الاختبار كان دقيقاً وصعباً، تحتاج لمراجعة المتون وعقد مقارنات بين المسائل.";
+        }
+    }
+
+    function restartQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+        document.getElementById('resultBox').style.display = 'none';
+        document.getElementById('quizSection').style.display = 'block';
+        loadQuestion();
+    }
+
+    // تشغيل السؤال الأول عند تحميل الصفحة
+    loadQuestion();
+</script>
+</body>
+</html>

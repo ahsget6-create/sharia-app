@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشروحات المرئية - متون طالب العلم</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #111827;
+            --bg-card-hover: #1f2937;
+            --primary-blue: #0ea5e9;
+            --primary-teal: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            direction: rtl;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- Header --- */
+        header {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title h1 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #38bdf8, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Main Container --- */
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 22px 18px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .page-hero h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f1f5f9;
+        }
+
+        .page-hero p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- Active Video Player Screen --- */
+        .player-wrapper {
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .player-details {
+            padding: 16px 20px;
+            background: var(--bg-card);
+        }
+
+        .player-details h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f8fafc;
+            margin-bottom: 4px;
+        }
+
+        .player-details p {
+            font-size: 0.85rem;
+            color: var(--primary-blue);
+        }
+
+        /* --- Videos List Grid --- */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .video-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            background-color: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .video-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #f8fafc;
+            margin-bottom: 6px;
+        }
+
+        .video-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #0ea5e9, #10b981);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .play-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="mutun.html" class="back-btn">➡️ قائمة المتون</a>
+        <div class="header-title">
+            <h1>🎥 الدروس المرئية المباشرة</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Hero Header -->
+        <div class="page-hero">
+            <h2>مشاهدة شروحات المتون</h2>
+        </div>
+
+        <!-- Main Video Screen Player -->
+        <div class="player-wrapper">
+            <div class="video-container">
+                <iframe id="mainPlayer" src="https://www.youtube-nocookie.com/embed/ASqaju1kpnk?autoplay=0" title="مشغل الفيديو المباشر" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="player-details">
+                <h3 id="currentTitle">شرح الأصول الثلاثة وأدلتها كاملاً</h3>
+                <p id="currentAuthor">فضيلة الشيخ د. عبد المحسن القاسم</p>
+            </div>
+        </div>
+
+        <!-- Video Selection List -->
+        <div class="section-title">📺 اختر الشرح المرئي لتشغيله:</div>
+
+        <div class="video-grid">
+
+            <!-- فيديو 1: ثلاثة الأصول -->
+            <div class="video-card" onclick="playVideo('ASqaju1kpnk', 'شرح الأصول الثلاثة وأدلتها كاملاً', 'الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>شرح متن ثلاثة الأصول</h4>
+                    <span>المستوى الأول • عقيدة</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+
+            <!-- فيديو 2: القواعد الأربع -->
+            <div class="video-card" onclick="playVideo('zZsnxRk5lU8', 'شرح القواعد الأربع (المقدمة)', 'الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>شرح متن القواعد الأربع</h4>
+                    <span>المستوى الأول • عقيدة</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+
+            <!-- فيديو 3: الأربعين النووية -->
+            <div class="video-card" onclick="playVideo('Y5JRc7qnfco', 'شرح الأربعين النووية (الحديث الأول)', 'الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>شرح الأربعين النووية</h4>
+                    <span>المستوى الأول • حديث</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+
+            <!-- فيديو 4: المستوى الثاني -->
+            <div class="video-card" onclick="playVideo('PLu_IqFvpjRDGBY01kyXaGP9Cne1IqCT1l', 'شرح متون المستوى الثاني (سلسلة كاملة)', 'الشيخ د. عبد المحسن القاسم', true)">
+                <div class="video-info">
+                    <h4>شروحات متون المستوى الثاني كاملة</h4>
+                    <span>المستوى الثاني • سلسلة دروس</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+
+            <!-- فيديو 5: المستوى الثالث -->
+            <div class="video-card" onclick="playVideo('PLu_IqFvpjRDGC71bKjCTPWedGXltydIcz', 'شرح متون المستوى الثالث (سلسلة كاملة)', 'الشيخ د. عبد المحسن القاسم', true)">
+                <div class="video-info">
+                    <h4>شروحات متون المستوى الثالث كاملة</h4>
+                    <span>المستوى الثالث • سلسلة دروس</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+<!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div><!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+           <!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+            <!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+            <!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+            <!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+            <!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+            <!-- فيديو جديد -->
+            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
+                <div class="video-info">
+                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
+                    <span>المستوى المطلوب • التصنيف</span>
+                </div>
+                <button class="play-btn">▶️ تشغيل الآن</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        function playVideo(id, title, author, isPlaylist = false) {
+            const player = document.getElementById('mainPlayer');
+
+            if (isPlaylist) {
+                // إذا كانت قائمة تشغيل (Playlist)
+                player.src = `https://www.youtube-nocookie.com/embed/videoseries?list=${id}&autoplay=1`;
+            } else {
+                // إذا كان فيديو مفرد
+                player.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+            }
+
+            // تحديث العناوين
+            document.getElementById('currentTitle').innerText = title;
+            document.getElementById('currentAuthor').innerText = author;
+
+            // التمرير بسلاسة للأعلى نحو الشاشة
+            window.scrollTo({
+                top: 80,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+
+</body>
+</html>

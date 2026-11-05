@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المصحف الشريف صفحة بصفحة - منصة العلوم الشرعية</title>
+  <style>
+    :root {
+      --bg:#101820; --panel:#182630; --panel2:#203440;
+      --text:#f2f5f3; --muted:#b8c7c7; --accent:#c5a66a;
+      --border:rgba(255,255,255,.10);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; min-height:100vh; background:var(--bg); color:var(--text);
+      font-family:Tahoma,Arial,sans-serif; line-height:1.9;
+    }
+    header {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:16px 5%; background:var(--panel); border-bottom:1px solid var(--border);
+      flex-wrap:wrap;
+    }
+    header h1 { margin:0; color:var(--accent); font-size:1.25rem; }
+    a, button { font:inherit; }
+    .back {
+      color:var(--text); text-decoration:none; padding:7px 13px;
+      border:1px solid var(--border); border-radius:9px;
+    }
+    main { width:min(920px,94%); margin:26px auto; }
+    .toolbar {
+      display:flex; justify-content:center; align-items:center; gap:10px;
+      flex-wrap:wrap; padding:15px; background:var(--panel);
+      border:1px solid var(--border); border-radius:14px;
+    }
+    button, select {
+      background:var(--panel2); color:var(--text); border:1px solid var(--border);
+      border-radius:9px; padding:9px 15px; cursor:pointer;
+    }
+    button:disabled { opacity:.4; cursor:not-allowed; }
+    #pageNumber { color:var(--accent); font-weight:bold; min-width:110px; text-align:center; }
+    #quranPage {
+      margin-top:20px; padding:28px 24px; min-height:360px;
+      background:#f7f0df; color:#242016; border:7px double #b49a62;
+      border-radius:12px; box-shadow:0 10px 28px #0005;
+    }
+    #pageText {
+      font-family:"Traditional Arabic","Amiri",serif; font-size:1.75rem;
+      line-height:2.25; text-align:justify; white-space:normal;
+    }
+    .ayah { display:inline; }
+    .ayah-number { color:#8b6b2f; font-size:.85em; white-space:nowrap; padding:0 3px; }
+    #status { text-align:center; color:var(--muted); padding:18px; }
+    @media(max-width:600px) {
+      header { justify-content:center; text-align:center; }
+      #quranPage { padding:18px 13px; }
+      #pageText { font-size:1.45rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back" href="quran.html">فهرس السور</a>
+    <h1>📖 المصحف الشريف صفحة بصفحة</h1>
+    <a class="back" href="index.html">الرئيسية</a>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <button id="prevPage" type="button">السابق</button>
+      <span id="pageNumber">الصفحة 1 من 604</span>
+      <button id="nextPage" type="button">التالي</button>
+      <label for="pageSelect">انتقال إلى:</label>
+      <select id="pageSelect" aria-label="اختر رقم الصفحة"></select>
+    </div>
+    <section id="quranPage" aria-live="polite">
+      <div id="pageText"></div>
+    </section>
+    <div id="status">جارٍ تحميل القرآن الكريم...</div>
+  </main>
+
+  <script>
+    let allQuranData = [];
+    let currentPage = 1;
+    const totalPages = 604;
+    const ayahsPerPage = 10;
+
+    const pageText = document.getElementById('pageText');
+    const pageNumber = document.getElementById('pageNumber');
+    const pageSelect = document.getElementById('pageSelect');
+    const prevPage = document.getElementById('prevPage');
+    const nextPage = document.getElementById('nextPage');
+    const status = document.getElementById('status');
+
+    for (let page = 1; page <= totalPages; page++) {
+      const option = document.createElement('option');
+      option.value = page;
+      option.textContent = `الصفحة ${page}`;
+      pageSelect.appendChild(option);
+    }
+
+    function renderPage() {
+      const start = (currentPage - 1) * ayahsPerPage;
+      const pageAyahs = allQuranData.slice(start, start + ayahsPerPage);
+      pageText.replaceChildren();
+
+      if (!pageAyahs.length) {
+        status.textContent = 'لا توجد آيات متاحة لهذه الصفحة.';
+      } else {
+        status.textContent = '';
+        pageAyahs.forEach((ayah, index) => {
+          const span = document.createElement('span');
+          span.className = 'ayah';
+          span.textContent = ayah.ar || '';
+          const number = document.createElement('span');
+          number.className = 'ayah-number';
+          number.textContent = ` ﴿${ayah.number || ayah.id || start + index + 1}﴾ `;
+          pageText.append(span, number);
+        });
+      }
+
+      pageNumber.textContent = `الصفحة ${currentPage} من ${totalPages}`;
+      pageSelect.value = String(currentPage);
+      prevPage.disabled = currentPage === 1;
+      nextPage.disabled = currentPage === totalPages;
+    }
+
+    function goToPage(page) {
+      const parsed = Number(page);
+      if (!Number.isInteger(parsed) || parsed < 1 || parsed > totalPages) return;
+      currentPage = parsed;
+      renderPage();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    prevPage.addEventListener('click', () => goToPage(currentPage - 1));
+    nextPage.addEventListener('click', () => goToPage(currentPage + 1));
+    pageSelect.addEventListener('change', event => goToPage(event.target.value));
+
+    async function loadQuran() {
+      try {
+        const response = await fetch('Quran.json');
+        if (!response.ok) throw new Error('تعذر تحميل ملف القرآن');
+        const data = await response.json();
+
+        allQuranData = [];
+        data.forEach(surah => {
+          if (Array.isArray(surah.array)) {
+            surah.array.forEach(ayah => {
+              allQuranData.push({
+                ar: ayah.ar,
+                id: ayah.id,
+                surahId: surah.id,
+                surahName: surah.name
+              });
+            });
+          }
+        });
+
+        if (!allQuranData.length) throw new Error('ملف القرآن لا يحتوي على آيات');
+        renderPage();
+      } catch (error) {
+        console.error(error);
+        status.textContent = 'حدث خطأ أثناء تحميل القرآن. تأكد من وجود ملف Quran.json في المسار الصحيح.';
+      }
+    }
+
+    loadQuran();
+  </script>
+</body>
+</html>

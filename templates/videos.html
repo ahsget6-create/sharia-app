@@ -1,391 +1,704 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الشروحات المرئية - متون طالب العلم</title>
-    <style>
-        :root {
-            --bg-dark: #090d16;
-            --bg-card: #111827;
-            --bg-card-hover: #1f2937;
-            --primary-blue: #0ea5e9;
-            --primary-teal: #10b981;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الشروحات المرئية للمتون</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            direction: rtl;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+    body {
+      margin: 0;
+      background: #101827;
+      color: #f3f5f8;
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.8;
+    }
 
-        /* --- Header --- */
-        header {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    header {
+      padding: 30px 16px;
+      text-align: center;
+      background: #1a2a40;
+      border-bottom: 1px solid #354760;
+    }
 
-        .back-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: var(--transition);
-        }
+    h1 {
+      margin: 0;
+      color: #dfb96e;
+      font-size: clamp(24px, 4vw, 35px);
+    }
 
-        .back-btn:active {
-            transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.1);
-        }
+    header p {
+      color: #bac6d6;
+      margin: 8px 0 0;
+    }
 
-        .header-title h1 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #38bdf8, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    main {
+      width: min(1050px, 94%);
+      margin: 25px auto 55px;
+    }
 
-        /* --- Main Container --- */
-        .main-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 24px 16px 40px;
-        }
+    .back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #dfb96e;
+      text-decoration: none;
+    }
 
-        /* Hero Section */
-        .page-hero {
-            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 22px 18px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-        }
+    .hero {
+      background: #19283d;
+      border: 1px solid #354760;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
 
-        .page-hero h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #f1f5f9;
-        }
+    .player {
+      background: #05080d;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
 
-        .page-hero p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
 
-        /* --- Active Video Player Screen --- */
-        .player-wrapper {
-            background: #000;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 28px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-        }
+    #videoTitle {
+      margin: 13px 0 0;
+      color: #dfb96e;
+      font-size: 20px;
+    }
 
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            background: #000;
-        }
+    #videoAuthor {
+      color: #bac6d6;
+      margin: 3px 0 0;
+    }
 
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
+    h2 {
+      color: #dfb96e;
+      margin: 25px 0 12px;
+    }
 
-        .player-details {
-            padding: 16px 20px;
-            background: var(--bg-card);
-        }
+    button {
+      font: inherit;
+      background: #dfb96e;
+      color: #17202c;
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 13px;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
 
-        .player-details h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #f8fafc;
-            margin-bottom: 4px;
-        }
+    button:hover {
+      background: #edca83;
+      transform: translateY(-1px);
+    }
 
-        .player-details p {
-            font-size: 0.85rem;
-            color: var(--primary-blue);
-        }
+    .levels {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        /* --- Videos List Grid --- */
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .level {
+      background: #19283d;
+      border: 1px solid #354760;
+      border-radius: 11px;
+      overflow: hidden;
+    }
 
-        .video-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+    .level-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 17px;
+      background: #19283d;
+      color: #f3f5f8;
+      text-align: right;
+      border-radius: 0;
+      cursor: pointer;
+      transform: none;
+    }
 
-        .video-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
+    .level-header:hover {
+      background: #22344d;
+      transform: none;
+    }
 
-        .video-card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-            background-color: var(--bg-card-hover);
-            transform: translateY(-2px);
-        }
+    .level-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .video-info h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #f8fafc;
-            margin-bottom: 6px;
-        }
+    .level-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 9px;
+      background: #dfb96e;
+      color: #17202c;
+      font-weight: bold;
+    }
 
-        .video-info span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
+    .level-name {
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-        .play-btn {
-            background: linear-gradient(135deg, #0ea5e9, #10b981);
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: var(--transition);
-        }
+    .level-description {
+      display: block;
+      color: #bac6d6;
+      font-size: 12px;
+      font-weight: normal;
+      margin-top: 3px;
+    }
 
-        .play-btn:hover {
-            opacity: 0.9;
-        }
-    </style>
+    .level-arrow {
+      color: #dfb96e;
+      font-size: 20px;
+      transition: transform .3s ease;
+    }
+
+    .level.open .level-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* حركة فتح وإغلاق الأقسام */
+    .level-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      padding: 0 15px;
+      border-top: 0 solid #354760;
+      transition:
+        max-height .45s ease,
+        opacity .3s ease,
+        padding .35s ease;
+    }
+
+    .level.open .level-content {
+      max-height: 6000px;
+      opacity: 1;
+      padding: 15px;
+      border-top: 1px solid #354760;
+    }
+
+    .level-content p {
+      color: #bac6d6;
+      font-size: 13px;
+      margin: 0 0 12px;
+    }
+
+    .watch-button {
+      display: inline-block;
+      margin: 4px 0 15px;
+    }
+
+    .lessons-title {
+      color: #dfb96e;
+      font-size: 15px;
+      margin: 10px 0;
+    }
+
+    .lessons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    .lesson-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 11px 13px;
+      text-align: right;
+      background: #22344d;
+      color: #f3f5f8;
+      border: 1px solid #354760;
+      border-radius: 9px;
+      transition: background .2s, border-color .2s;
+    }
+
+    .lesson-button:hover {
+      background: #2b4260;
+      border-color: #dfb96e;
+      transform: none;
+    }
+
+    .lesson-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: #dfb96e;
+      color: #17202c;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .lesson-label {
+      font-size: 13px;
+    }
+
+    .playlist-note {
+      color: #bac6d6;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: 94%;
+        margin-top: 18px;
+      }
+
+      .hero {
+        padding: 12px;
+      }
+
+      .level-header {
+        padding: 13px;
+      }
+
+      .level-name {
+        font-size: 14px;
+      }
+
+      .lessons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <a href="mutun.html" class="back-btn">➡️ قائمة المتون</a>
-        <div class="header-title">
-            <h1>🎥 الدروس المرئية المباشرة</h1>
-        </div>
-    </header>
+<header>
+  <h1>🎓 الشروحات المرئية للمتون</h1>
+  <p>دروس وشروحات تساعد على فهم المتون العلمية</p>
+</header>
 
-    <!-- Main Content -->
-    <main class="main-container">
+<main>
 
-        <!-- Hero Header -->
-        <div class="page-hero">
-            <h2>مشاهدة شروحات المتون</h2>
-        </div>
+  <a class="back" href="/mutun.html">
+    ← العودة إلى قائمة المتون
+  </a>
 
-        <!-- Main Video Screen Player -->
-        <div class="player-wrapper">
-            <div class="video-container">
-                <iframe id="mainPlayer" src="https://www.youtube-nocookie.com/embed/ASqaju1kpnk?autoplay=0" title="مشغل الفيديو المباشر" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="player-details">
-                <h3 id="currentTitle">شرح الأصول الثلاثة وأدلتها كاملاً</h3>
-                <p id="currentAuthor">فضيلة الشيخ د. عبد المحسن القاسم</p>
-            </div>
-        </div>
+  <section class="hero">
 
-        <!-- Video Selection List -->
-        <div class="section-title">📺 اختر الشرح المرئي لتشغيله:</div>
+    <div class="player">
+      <iframe
+        id="videoPlayer"
+        src="https://www.youtube-nocookie.com/embed/videoseries?list=PLu_IqFvpjRDFk02N-DCue8zBJlDLqV5oM"
+        title="مشغل الشروحات المرئية"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
 
-        <div class="video-grid">
+    <h2 id="videoTitle">شروحات المتون العلمية - المستوى الأول</h2>
 
-            <!-- فيديو 1: ثلاثة الأصول -->
-            <div class="video-card" onclick="playVideo('ASqaju1kpnk', 'شرح الأصول الثلاثة وأدلتها كاملاً', 'الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>شرح متن ثلاثة الأصول</h4>
-                    <span>المستوى الأول • عقيدة</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
+    <p id="videoAuthor">
+      اختر درسًا أو مستوى من المستويات لمشاهدة شروحاته
+    </p>
 
-            <!-- فيديو 2: القواعد الأربع -->
-            <div class="video-card" onclick="playVideo('zZsnxRk5lU8', 'شرح القواعد الأربع (المقدمة)', 'الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>شرح متن القواعد الأربع</h4>
-                    <span>المستوى الأول • عقيدة</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
+  </section>
 
-            <!-- فيديو 3: الأربعين النووية -->
-            <div class="video-card" onclick="playVideo('Y5JRc7qnfco', 'شرح الأربعين النووية (الحديث الأول)', 'الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>شرح الأربعين النووية</h4>
-                    <span>المستوى الأول • حديث</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
+  <h2>📚 مستويات الشروحات</h2>
 
-            <!-- فيديو 4: المستوى الثاني -->
-            <div class="video-card" onclick="playVideo('PLu_IqFvpjRDGBY01kyXaGP9Cne1IqCT1l', 'شرح متون المستوى الثاني (سلسلة كاملة)', 'الشيخ د. عبد المحسن القاسم', true)">
-                <div class="video-info">
-                    <h4>شروحات متون المستوى الثاني كاملة</h4>
-                    <span>المستوى الثاني • سلسلة دروس</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
+  <section class="levels">
 
-            <!-- فيديو 5: المستوى الثالث -->
-            <div class="video-card" onclick="playVideo('PLu_IqFvpjRDGC71bKjCTPWedGXltydIcz', 'شرح متون المستوى الثالث (سلسلة كاملة)', 'الشيخ د. عبد المحسن القاسم', true)">
-                <div class="video-info">
-                    <h4>شروحات متون المستوى الثالث كاملة</h4>
-                    <span>المستوى الثالث • سلسلة دروس</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-<!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div><!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-           <!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-            <!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-            <!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-            <!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-            <!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
-            <!-- فيديو جديد -->
-            <div class="video-card" onclick="playVideo('ضع_معرف_الفيديو_هنا', 'عنوان الدرس الذي سيظهر بالأعلى', 'فضيلة الشيخ د. عبد المحسن القاسم')">
-                <div class="video-info">
-                    <h4>عنوان الدرس باختصار (في القائمة)</h4>
-                    <span>المستوى المطلوب • التصنيف</span>
-                </div>
-                <button class="play-btn">▶️ تشغيل الآن</button>
-            </div>
+    <!-- المستوى الأول -->
+    <article class="level open">
 
-        </div>
+      <button class="level-header"
+        type="button"
+        aria-expanded="true"
+        onclick="toggleLevel(this)">
 
-    </main>
+        <span class="level-info">
+          <span class="level-number">1</span>
+          <span>
+            <span class="level-name">المستوى الأول</span>
+            <span class="level-description">قائمة شروحات المستوى الأول</span>
+          </span>
+        </span>
 
-    <script>
-        function playVideo(id, title, author, isPlaylist = false) {
-            const player = document.getElementById('mainPlayer');
+        <span class="level-arrow">⌄</span>
+      </button>
 
-            if (isPlaylist) {
-                // إذا كانت قائمة تشغيل (Playlist)
-                player.src = `https://www.youtube-nocookie.com/embed/videoseries?list=${id}&autoplay=1`;
-            } else {
-                // إذا كان فيديو مفرد
-                player.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
-            }
+      <div class="level-content">
+        <p>اضغط على الزر لتشغيل قائمة شروحات المستوى الأول كاملة.</p>
 
-            // تحديث العناوين
-            document.getElementById('currentTitle').innerText = title;
-            document.getElementById('currentAuthor').innerText = author;
+        <button class="watch-button" type="button"
+          onclick="playPlaylist('PLu_IqFvpjRDFk02N-DCue8zBJlDLqV5oM', 'المستوى الأول')">
+          ▶ مشاهدة شروحات المستوى الأول كاملة
+        </button>
 
-            // التمرير بسلاسة للأعلى نحو الشاشة
-            window.scrollTo({
-                top: 80,
-                behavior: 'smooth'
-            });
-        }
-    </script>
+        <h3 class="lessons-title">📖 دروس المستوى الأول</h3>
+        <div class="lessons" id="lessons1"></div>
+      </div>
+
+    </article>
+
+    <!-- المستوى الثاني -->
+    <article class="level">
+
+      <button class="level-header"
+        type="button"
+        aria-expanded="false"
+        onclick="toggleLevel(this)">
+
+        <span class="level-info">
+          <span class="level-number">2</span>
+          <span>
+            <span class="level-name">المستوى الثاني</span>
+            <span class="level-description">قائمة شروحات المستوى الثاني</span>
+          </span>
+        </span>
+
+        <span class="level-arrow">⌄</span>
+      </button>
+
+      <div class="level-content">
+        <p>اضغط على الزر لتشغيل قائمة شروحات المستوى الثاني كاملة.</p>
+
+        <button class="watch-button" type="button"
+          onclick="playPlaylist('PLu_IqFvpjRDGBY01kyXaGP9Cne1IqCT1l', 'المستوى الثاني')">
+          ▶ مشاهدة شروحات المستوى الثاني كاملة
+        </button>
+
+        <h3 class="lessons-title">📖 دروس المستوى الثاني</h3>
+        <div class="lessons" id="lessons2"></div>
+      </div>
+
+    </article>
+
+    <!-- المستوى الثالث -->
+    <article class="level">
+
+      <button class="level-header"
+        type="button"
+        aria-expanded="false"
+        onclick="toggleLevel(this)">
+
+        <span class="level-info">
+          <span class="level-number">3</span>
+          <span>
+            <span class="level-name">المستوى الثالث</span>
+            <span class="level-description">قائمة شروحات المستوى الثالث</span>
+          </span>
+        </span>
+
+        <span class="level-arrow">⌄</span>
+      </button>
+
+      <div class="level-content">
+        <p>اضغط على الزر لتشغيل قائمة شروحات المستوى الثالث كاملة.</p>
+
+        <button class="watch-button" type="button"
+          onclick="playPlaylist('PLu_IqFvpjRDGC71bKjCTPWedGXltydIcz', 'المستوى الثالث')">
+          ▶ مشاهدة شروحات المستوى الثالث كاملة
+        </button>
+
+        <h3 class="lessons-title">📖 دروس المستوى الثالث</h3>
+        <div class="lessons" id="lessons3"></div>
+      </div>
+
+    </article>
+
+    <!-- المستوى الرابع -->
+    <article class="level">
+
+      <button class="level-header"
+        type="button"
+        aria-expanded="false"
+        onclick="toggleLevel(this)">
+
+        <span class="level-info">
+          <span class="level-number">4</span>
+          <span>
+            <span class="level-name">المستوى الرابع</span>
+            <span class="level-description">قائمة شروحات المستوى الرابع</span>
+          </span>
+        </span>
+
+        <span class="level-arrow">⌄</span>
+      </button>
+
+      <div class="level-content">
+        <p>اضغط على الزر لتشغيل قائمة شروحات المستوى الرابع كاملة.</p>
+
+        <button class="watch-button" type="button"
+          onclick="playPlaylist('PLu_IqFvpjRDHZUiYAXi0eb-ETYAJODgOe', 'المستوى الرابع')">
+          ▶ مشاهدة شروحات المستوى الرابع كاملة
+        </button>
+
+        <h3 class="lessons-title">📖 دروس المستوى الرابع</h3>
+        <div class="lessons" id="lessons4"></div>
+      </div>
+
+    </article>
+
+    <!-- المستوى الخامس -->
+    <article class="level">
+
+      <button class="level-header"
+        type="button"
+        aria-expanded="false"
+        onclick="toggleLevel(this)">
+
+        <span class="level-info">
+          <span class="level-number">5</span>
+          <span>
+            <span class="level-name">المستوى الخامس</span>
+            <span class="level-description">قائمة شروحات المستوى الخامس</span>
+          </span>
+        </span>
+
+        <span class="level-arrow">⌄</span>
+      </button>
+
+      <div class="level-content">
+        <p>اضغط على الزر لتشغيل قائمة شروحات المستوى الخامس كاملة.</p>
+
+        <button class="watch-button" type="button"
+          onclick="playPlaylist('PLXS0usquloW8p8fvW8hev8FsVw70losFb', 'المستوى الخامس')">
+          ▶ مشاهدة شروحات المستوى الخامس كاملة
+        </button>
+
+        <p class="playlist-note">
+          يمكنك اختيار الدرس الذي تريده من داخل قائمة التشغيل في المشغّل العلوي.
+        </p>
+      </div>
+
+    </article>
+
+  </section>
+
+</main>
+
+<script>
+
+  // روابط دروس المستوى الأول
+  const level1Videos = [
+    "ASqaju1kpnk",
+    "NjbOTLyZmOQ",
+    "-_F9445OryM",
+    "Pv4YnD8w76Y",
+    "mOpNiq-BjWc",
+    "aM2bSHBPvKU",
+    "lp7wt8HiX_g",
+    "9f8gkLBgabY",
+    "KrF7hdpxt98"
+  ];
+
+  // روابط دروس المستوى الثاني
+  const level2Videos = [
+    "sw6jA8TtnF4",
+    "F7e-ezfLNxY",
+    "z8529h56nfw",
+    "kHOFv7bvIJs",
+    "zK-Ykm3QQ0g",
+    "D2zWqvG-c9k",
+    "aZ5QGkVdZyk",
+    "xp8RoHZAqow",
+    "GaIsoHCzJXM",
+    "uujolsebIFo",
+    "TM_B25c_cvs",
+    "PHVM800LmRA",
+    "8Q3UeBg-V2Q",
+    "JuSWK7Pf3JQ",
+    "OaLSYYTUGhI",
+    "Wl3g0B3qiX4",
+    "Jc3ABNJRxeI",
+    "0SYWZkaTwYE",
+    "UHmbvwtM28I",
+    "klpkR3gBot8",
+    "4NH4GqYHsyc",
+    "Tb_vMQ5W31M"
+  ];
+
+  // روابط دروس المستوى الثالث
+  const level3Videos = [
+    "1AxpuKJuyOI",
+    "4kjMITWXugQ",
+    "ICJeLQJBHtI",
+    "kz7eKKF-uYM",
+    "JeAzFSJ5eWg",
+    "JXjhzwyrte4",
+    "2ZuRGJO-z5w",
+    "-4S4hSDne2A",
+    "evtkv2QG9bc",
+    "cFFuhDdJjIc",
+    "_PIV_hEB6Qw",
+    "9KeEev38PwA",
+    "fmPCwPDQBy0",
+    "OOuHXxFx7aU",
+    "kQ0MG336wto",
+    "FkLok3ODgXM",
+    "8k90C4h8cn4",
+    "lkpeVjHO3r0",
+    "hw8cUiKVzTk",
+    "wdbgQEiyeD4"
+  ];
+
+  // روابط دروس المستوى الرابع
+  const level4Videos = [
+    "iGBJ1Y04j7Y",
+    "2KqtDkz8onA",
+    "cjnmHuZE3c0",
+    "_OpcTe0d2Bw",
+    "WdfcZ3oqsxU",
+    "vM76DCzgMa0",
+    "ysw2t62sDxI",
+    "Go989U7svtQ",
+    "LasHtpr_kFk",
+    "9DlZbTNjXqI",
+    "pIQcQRMp0PQ",
+    "hOzf6LQaCmY",
+    "sHcPjF0-K5g",
+    "2Ag_TWpqkaI",
+    "cnMU5YN9MZI",
+    "aARH-lRrxbE",
+    "9ycRNJqcwvo",
+    "wRVy8hTb-aY",
+    "am5t3JL8OCQ",
+    "_071EhHIg-A"
+  ];
+
+  // إنشاء أزرار الدروس تلقائيًا
+  function renderLessons(videos, containerId, levelName) {
+
+    const container = document.getElementById(containerId);
+
+    videos.forEach((videoId, index) => {
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "lesson-button";
+
+      const number = document.createElement("span");
+      number.className = "lesson-number";
+      number.textContent = index + 1;
+
+      const label = document.createElement("span");
+      label.className = "lesson-label";
+      label.textContent = "الدرس " + (index + 1);
+
+      button.appendChild(number);
+      button.appendChild(label);
+
+      button.addEventListener("click", () => {
+        playVideo(
+          videoId,
+          levelName + " - الدرس " + (index + 1),
+          "أنت تشاهد الدرس رقم " + (index + 1) + " من " + levelName
+        );
+      });
+
+      container.appendChild(button);
+
+    });
+
+  }
+
+  // عرض دروس المستويات
+  renderLessons(level1Videos, "lessons1", "المستوى الأول");
+  renderLessons(level2Videos, "lessons2", "المستوى الثاني");
+  renderLessons(level3Videos, "lessons3", "المستوى الثالث");
+  renderLessons(level4Videos, "lessons4", "المستوى الرابع");
+
+
+  // فتح وإغلاق المستوى
+  function toggleLevel(button) {
+
+    const level = button.closest(".level");
+    const isOpen = level.classList.contains("open");
+
+    level.classList.toggle("open", !isOpen);
+
+    button.setAttribute(
+      "aria-expanded",
+      String(!isOpen)
+    );
+
+  }
+
+
+  // تشغيل قائمة تشغيل كاملة
+  function playPlaylist(id, title) {
+
+    if (!id) return;
+
+    const player = document.getElementById("videoPlayer");
+
+    const url = new URL(
+      "https://www.youtube-nocookie.com/embed/videoseries"
+    );
+
+    url.searchParams.set("list", id);
+    url.searchParams.set("rel", "0");
+
+    player.src = url.toString();
+
+    document.getElementById("videoTitle").textContent =
+      "شروحات المتون العلمية - " + title;
+
+    document.getElementById("videoAuthor").textContent =
+      "قائمة تشغيل كاملة - يمكنك اختيار الدرس من داخل المشغّل";
+
+    document.querySelector(".hero").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }
+
+
+  // تشغيل درس منفرد مباشرة
+  function playVideo(id, title, author) {
+
+    if (!id) return;
+
+    const player = document.getElementById("videoPlayer");
+
+    const url = new URL(
+      "https://www.youtube-nocookie.com/embed/" +
+      encodeURIComponent(id)
+    );
+
+    url.searchParams.set("rel", "0");
+
+    player.src = url.toString();
+
+    document.getElementById("videoTitle").textContent = title;
+    document.getElementById("videoAuthor").textContent = author;
+
+    document.querySelector(".hero").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }
+
+</script>
 
 </body>
 </html>

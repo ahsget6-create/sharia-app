@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الحساب | منصة العلوم الشرعية</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      font-family: Tahoma, Arial, sans-serif;
+      color: #f5f0e6;
+      background:
+        radial-gradient(circle at top right, rgba(190, 150, 70, .13), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(190, 150, 70, .08), transparent 35%),
+        #10120f;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 38px 32px;
+      background: rgba(27, 30, 25, .97);
+      border: 1px solid rgba(205, 169, 92, .28);
+      border-radius: 22px;
+      box-shadow: 0 20px 65px rgba(0, 0, 0, .45);
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-icon {
+      width: 68px;
+      height: 68px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      border-radius: 50%;
+      color: #d7b66e;
+      background: rgba(215, 182, 110, .10);
+      border: 1px solid rgba(215, 182, 110, .35);
+      font-size: 31px;
+    }
+
+    .logo h1 {
+      color: #dfc17e;
+      font-size: 23px;
+      margin-bottom: 9px;
+    }
+
+    .logo p {
+      color: #aaa99f;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 5px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      background: #171a16;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px 8px;
+      border: none;
+      border-radius: 9px;
+      color: #aaa99f;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+      transition: .2s;
+    }
+
+    .tab.active {
+      color: #171811;
+      background: linear-gradient(135deg, #e1c681, #b99750);
+      font-weight: bold;
+    }
+
+    .form-title {
+      margin-bottom: 20px;
+      font-size: 19px;
+      color: #eee3c9;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 9px;
+      color: #d5d0c4;
+      font-size: 13px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid #3b4035;
+      border-radius: 10px;
+      outline: none;
+      color: #f5f0e6;
+      background: #151813;
+      font-family: inherit;
+      font-size: 14px;
+      transition: .2s;
+    }
+
+    .field input:focus {
+      border-color: #c6a45e;
+      box-shadow: 0 0 0 3px rgba(198, 164, 94, .10);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      border: none;
+      border-radius: 10px;
+      color: #191a14;
+      background: linear-gradient(135deg, #e1c681, #b99750);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .submit-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      margin-bottom: 17px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .message.error {
+      display: block;
+      color: #ffc5c5;
+      background: rgba(180, 50, 50, .13);
+      border: 1px solid rgba(220, 80, 80, .25);
+    }
+
+    .message.success {
+      display: block;
+      color: #c9edc5;
+      background: rgba(60, 150, 65, .13);
+      border: 1px solid rgba(90, 180, 90, .25);
+    }
+
+    .footer {
+      margin-top: 25px;
+      text-align: center;
+      color: #85877d;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 18px;
+      text-align: center;
+      color: #d5b66f;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 30px 21px;
+      }
+
+      .logo h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="auth-container">
+
+    <div class="logo">
+      <div class="logo-icon">۞</div>
+      <h1>منصة العلوم الشرعية</h1>
+      <p>مرحبًا بك، سجّل دخولك أو أنشئ حسابًا جديدًا للمتابعة</p>
+    </div>
+
+    <div class="tabs">
+      <button type="button" class="tab active" id="loginTab"
+              onclick="switchMode('login')">
+        تسجيل الدخول
+      </button>
+
+      <button type="button" class="tab" id="registerTab"
+              onclick="switchMode('register')">
+        إنشاء حساب
+      </button>
+    </div>
+
+    <div id="message" class="message"></div>
+
+    <form id="authForm">
+      <h2 class="form-title" id="formTitle">تسجيل الدخول</h2>
+
+      <div class="field">
+        <label for="username">اسم المستخدم</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="أدخل اسم المستخدم"
+          minlength="3"
+          required
+          autocomplete="username"
+        >
+      </div>
+
+      <div class="field">
+        <label for="password">كلمة المرور</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="أدخل كلمة المرور"
+          required
+          autocomplete="current-password"
+        >
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        دخول إلى الحساب
+      </button>
+    </form>
+
+    <a href="/" class="back-link">العودة إلى الصفحة الرئيسية</a>
+
+    <div class="footer">
+      منصة العلوم الشرعية<br>
+      نسأل الله لنا ولكم العلم النافع والعمل الصالح
+    </div>
+
+  </main>
+
+  <script>
+let currentMode = {{ mode | default('login', true) | tojson }};
+const nextUrl = {{ next_url | default('/shorts', true) | tojson }};
+
+    const form = document.getElementById("authForm");
+    const messageBox = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+    const passwordInput = document.getElementById("password");
+
+    function switchMode(mode) {
+      currentMode = mode;
+
+      document.getElementById("loginTab").classList.toggle(
+        "active", mode === "login"
+      );
+
+      document.getElementById("registerTab").classList.toggle(
+        "active", mode === "register"
+      );
+
+      document.getElementById("formTitle").textContent =
+        mode === "login" ? "تسجيل الدخول" : "إنشاء حساب جديد";
+
+      submitBtn.textContent =
+        mode === "login" ? "دخول إلى الحساب" : "إنشاء الحساب";
+
+      passwordInput.autocomplete =
+        mode === "login" ? "current-password" : "new-password";
+
+      passwordInput.minLength = mode === "register" ? 6 : 1;
+
+      messageBox.className = "message";
+      messageBox.textContent = "";
+    }
+
+    function showMessage(text, type) {
+      messageBox.textContent = text;
+      messageBox.className = "message " + type;
+    }
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = passwordInput.value;
+
+      if (username.length < 3) {
+        showMessage("اسم المستخدم يجب أن يكون 3 أحرف على الأقل.", "error");
+        return;
+      }
+
+      if (currentMode === "register" && password.length < 6) {
+        showMessage("كلمة المرور يجب أن تكون 6 أحرف على الأقل.", "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "يرجى الانتظار...";
+      messageBox.className = "message";
+
+      const endpoint = currentMode === "login" ? "/login" : "/register";
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+            next: nextUrl
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          showMessage(
+            data.message || "حدث خطأ، يرجى المحاولة مرة أخرى.",
+            "error"
+          );
+          return;
+        }
+
+        showMessage(
+          currentMode === "login"
+            ? "تم تسجيل الدخول بنجاح، جارٍ تحويلك..."
+            : "تم إنشاء حسابك بنجاح، جارٍ تحويلك...",
+          "success"
+        );
+
+        window.location.href = data.redirect || "/shorts";
+
+      } catch (error) {
+        showMessage("تعذر الاتصال بالخادم. تأكد أن الموقع يعمل.", "error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent =
+          currentMode === "login" ? "دخول إلى الحساب" : "إنشاء الحساب";
+      }
+    });
+
+    switchMode(currentMode);
+  </script>
+
+</body>
+</html>

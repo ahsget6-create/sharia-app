@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فهرس سور القرآن الكريم - منصة العلوم الشرعية</title>
+  <style>
+    :root { --bg:#101820; --panel:#182630; --panel2:#203440; --text:#f2f5f3; --muted:#b8c7c7; --accent:#c5a66a; --border:rgba(255,255,255,.1); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Tahoma,Arial,sans-serif; line-height:1.8; }
+    header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:16px 5%; background:var(--panel); border-bottom:1px solid var(--border); }
+    header h1 { margin:0; color:var(--accent); font-size:1.25rem; }
+    .back { color:var(--text); text-decoration:none; border:1px solid var(--border); border-radius:9px; padding:7px 13px; }
+    main { width:min(1050px,94%); margin:28px auto 55px; }
+    .intro { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center; margin-bottom:20px; }
+    .intro h2 { margin:0 0 5px; color:var(--accent); }
+    .intro p { margin:0; color:var(--muted); }
+    #surahs-container { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
+    .surah-card { display:flex; align-items:center; gap:13px; padding:14px; border:1px solid var(--border); border-radius:12px; background:var(--panel); text-decoration:none; transition:.2s; }
+    .surah-card:hover { border-color:var(--accent); background:var(--panel2); transform:translateY(-2px); }
+    .surah-number { width:40px; height:40px; flex:0 0 40px; display:grid; place-items:center; border:1px solid #9c8556; color:var(--accent); border-radius:50%; }
+    .surah-info { min-width:0; flex:1; }
+    .surah-name { font-weight:bold; font-size:1.05rem; }
+    .surah-meta { color:var(--muted); font-size:.82rem; }
+    .surah-type { color:var(--accent); }
+    #status { text-align:center; color:var(--muted); padding:22px; }
+    @media(max-width:520px) { header { justify-content:center; } #surahs-container { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back" href="mushaf.html">المصحف صفحة بصفحة</a>
+    <h1>📜 فهرس سور القرآن الكريم</h1>
+    <a class="back" href="index.html">الرئيسية</a>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>سور القرآن الكريم</h2>
+      <p>اختر السورة لقراءة آياتها.</p>
+    </section>
+    <div id="status">جارٍ تحميل فهرس السور...</div>
+    <div id="surahs-container"></div>
+  </main>
+  <script>
+    async function loadSurahs() {
+      const container = document.getElementById('surahs-container');
+      const status = document.getElementById('status');
+      try {
+        const response = await fetch('Quran.json');
+        if (!response.ok) throw new Error('تعذر تحميل ملف القرآن');
+        const surahs = await response.json();
+        if (!Array.isArray(surahs)) throw new Error('تنسيق ملف القرآن غير متوقع');
+
+        container.replaceChildren();
+        surahs.forEach(surah => {
+          const card = document.createElement('a');
+          card.className = 'surah-card';
+          card.href = `surah.html?id=${encodeURIComponent(surah.id)}`;
+
+          const number = document.createElement('span');
+          number.className = 'surah-number';
+          number.textContent = surah.id;
+
+          const info = document.createElement('div');
+          info.className = 'surah-info';
+
+          const name = document.createElement('div');
+          name.className = 'surah-name';
+          name.textContent = surah.name || surah.name_en || 'سورة';
+
+          const meta = document.createElement('div');
+          meta.className = 'surah-meta';
+          const type = document.createElement('span');
+          type.className = 'surah-type';
+          type.textContent = (surah.type === 'Meccan' || surah.type === 'مكية') ? 'مكية' : 'مدنية';
+          const count = document.createElement('span');
+          count.textContent = ` · ${Array.isArray(surah.array) ? surah.array.length : 0} آية`;
+          meta.append(type, count);
+          info.append(name, meta);
+          card.append(number, info);
+          container.appendChild(card);
+        });
+        status.textContent = surahs.length ? '' : 'لم يتم العثور على سور في الملف.';
+      } catch (error) {
+        console.error(error);
+        status.textContent = 'تعذر تحميل السور. تأكد من وجود ملف Quran.json في المسار الصحيح.';
+      }
+    }
+    loadSurahs();
+  </script>
+</body>
+</html>

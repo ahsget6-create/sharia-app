@@ -18510,7 +18510,7 @@
             const data = mutunData[matnKey];
             if (document.getElementById('headerMatnTitle')) document.getElementById('headerMatnTitle').textContent = data.title;
             if (document.getElementById('matnTitle')) document.getElementById('matnTitle').textContent = data.title;
-            if (document.getElementById('matnAuthor')) document.getElementById('matnAuthor').textContent = data.author;
+            if (document.getElementById('matnAuthor')) document.getElementById('matnAuthor').textContent = data.author || data.autho || 'غير محدد';
             if (document.getElementById('matnDesc')) document.getElementById('matnDesc').textContent = data.desc;
             if (document.getElementById('matnText')) document.getElementById('matnText').textContent = data.text;
         }

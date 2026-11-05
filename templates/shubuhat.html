@@ -1,319 +1,722 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المرئيات وقوائم التشغيل - متون طالب العلم</title>
-    <style>
-        :root {
-            --bg-dark: #090d16;
-            --bg-card: #111827;
-            --primary-blue: #0ea5e9;
-            --primary-teal: #10b981;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101827">
+  <title>الشبهات والردود | منصة العلوم الشرعية</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            direction: rtl;
-            padding: 20px;
-        }
+    body {
+      margin: 0;
+      background: #101827;
+      color: #f3f5f8;
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.85;
+    }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto 24px auto;
-            padding-bottom: 14px;
-            border-bottom: 1px solid var(--border-color);
-        }
+    header {
+      padding: 30px 16px;
+      text-align: center;
+      background: #1a2a40;
+      border-bottom: 1px solid #354760;
+    }
 
-        .back-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: var(--transition);
-        }
+    h1 {
+      margin: 0;
+      color: #dfb96e;
+      font-size: clamp(23px, 4vw, 34px);
+    }
 
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+    header p {
+      color: #bac6d6;
+      margin: 8px 0 0;
+    }
 
-        h1 {
-            font-size: 1.15rem;
-            background: linear-gradient(90deg, #38bdf8, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+    main {
+      width: min(950px, 92%);
+      margin: 30px auto 60px;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .intro {
+      color: #bac6d6;
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-        .section-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
+    /* مشغل الفيديو */
 
-        .playlist-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: var(--transition);
-        }
+    .player-box {
+      background: #19283d;
+      border: 1px solid #354760;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
 
-        .playlist-card:hover {
-            border-color: rgba(14, 165, 233, 0.3);
-        }
+    .player-heading {
+      color: #dfb96e;
+      font-size: 19px;
+      margin: 0 0 13px;
+    }
 
-        .playlist-toggle {
-            padding: 16px;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #38bdf8;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.02);
-            user-select: none;
-        }
+    .player {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #05080d;
+      border-radius: 12px;
+      overflow: hidden;
+    }
 
-        .playlist-toggle span.sub-title {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-right: 10px;
-        }
+    .player iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
 
-        .playlist-content {
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            transition: max-height 0.5s ease-in-out, opacity 0.4s ease-in-out, padding 0.4s ease;
-            background: rgba(0, 0, 0, 0.15);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 0 14px;
-            border-top: 1px solid transparent;
-        }
+    #videoTitle {
+      color: #dfb96e;
+      font-size: 19px;
+      margin: 13px 0 3px;
+    }
 
-        .playlist-card.active .playlist-content {
-            max-height: 12000px;
-            opacity: 1;
-            padding: 14px;
-            border-top-color: var(--border-color);
-        }
+    #videoAuthor {
+      color: #bac6d6;
+      font-size: 14px;
+      margin: 0;
+    }
 
-        .video-box {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            overflow: hidden;
-            padding: 10px;
-        }
+    .player-note {
+      color: #94a3b8;
+      font-size: 12px;
+      margin: 10px 0 0;
+    }
 
-        .video-title {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    /* القوائم */
 
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            height: 0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    .playlist {
+      background: #19283d;
+      border: 1px solid #354760;
+      border-radius: 14px;
+      margin: 15px 0;
+      overflow: hidden;
+    }
 
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-    </style>
+    .playlist-head {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      text-align: right;
+      padding: 17px 20px;
+      background: #22344d;
+      color: #f3f5f8;
+      border: 0;
+      font: inherit;
+      cursor: pointer;
+      transition: background 0.25s ease;
+    }
+
+    .playlist-head:hover {
+      background: #2b405d;
+    }
+
+    .playlist-head strong {
+      color: #dfb96e;
+      font-size: 16px;
+    }
+
+    .playlist-icon {
+      color: #dfb96e;
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .playlist.active .playlist-icon {
+      transform: rotate(180deg);
+    }
+
+    /* حركة فتح وإغلاق القوائم */
+
+    .playlist-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.4s ease;
+    }
+
+    .playlist.active .playlist-body {
+      grid-template-rows: 1fr;
+    }
+
+    .playlist-inner {
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .playlist-content {
+      padding: 10px 20px 18px;
+    }
+
+    /* أزرار الدروس */
+
+    .lesson {
+      padding: 9px 0;
+      border-bottom: 1px solid #354760;
+    }
+
+    .lesson:last-child {
+      border-bottom: 0;
+    }
+
+    .lesson-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: right;
+      padding: 12px 15px;
+      background: #22344d;
+      border: 1px solid #3a506c;
+      border-radius: 9px;
+      color: #e4c17e;
+      text-decoration: none;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.2s ease;
+    }
+
+    .lesson-link:hover {
+      background: #2d4564;
+      border-color: #dfb96e;
+      transform: translateY(-2px);
+    }
+
+    .lesson-link.playing {
+      background: #3b4b3c;
+      border-color: #dfb96e;
+      color: #ffe3a3;
+    }
+
+    .play-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 29px;
+      height: 29px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: #dfb96e;
+      color: #17202c;
+      font-size: 12px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 20px;
+      color: #dfb96e;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .back:hover {
+      color: #ffe3a3;
+    }
+
+    footer {
+      text-align: center;
+      color: #8290a3;
+      font-size: 12px;
+      padding: 20px;
+      border-top: 1px solid #354760;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        width: 94%;
+      }
+
+      .player-box {
+        padding: 12px;
+      }
+
+      .playlist-head {
+        padding: 14px;
+      }
+
+      .playlist-content {
+        padding: 8px 12px 14px;
+      }
+
+      .lesson-link {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-    <header>
-        <a href="index.html" class="back-btn">➡️ الرئيسية</a>
-        <h1>🎥 الشبهات والردود</h1>
-    </header>
+<header>
+  <h1>🎥 الشبهات والردود</h1>
+  <p>مرئيات وقوائم تشغيل نافعة في مسائل الاعتقاد والرد على الشبهات</p>
+</header>
 
-    <div class="container">
-        <p class="section-desc">في هذه الصفحة يتم عرض قوائم تشغيل ردود أهل العلم على أبرز الشبهات...</p>
+<main>
 
-        <!-- 1. سلسلة متعصبة المذاهب -->
-        <div class="playlist-card">
-            <div class="playlist-toggle" onclick="togglePlaylist(this)">
-                <div>
-                    <span>سلسلة متعصبة المذاهب </span>
-                    <span class="sub-title">(فضيلة الشيخ أ.د. عبدالعزيز الريس)</span>
-                </div>
-                <span>➕</span>
-            </div>
-            <div class="playlist-content">
-                <div class="video-box">
-                    <div class="video-title"><span>▶</span> كشف شبهات متعصبة المذاهب ورد أئمة الدعوة النجدية عليها</div>
-                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/mUB9CyCGqoM" allowfullscreen></iframe></div>
-                </div>
-                <div class="video-box">
-                    <div class="video-title"><span>▶</span> أقوال النبلاء في نسف متعصبة المذاهب الجهلاء</div>
-                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/N21X6Bs0BB4" allowfullscreen></iframe></div>
-                </div>
-                <div class="video-box">
-                    <div class="video-title"><span>▶</span> متعصبة المذاهب بين الإفراط والتفريط</div>
-                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/Zrt92XjyuWg" allowfullscreen></iframe></div>
-                </div>
-                <div class="video-box">
-                    <div class="video-title"><span>▶</span> يشترط متعصبة المذاهب شروطا للاجتهاد لم توجد في أئمتهم!</div>
-                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/LIFySpBegPU" allowfullscreen></iframe></div>
-                </div>
-                <div class="video-box">
-                    <div class="video-title"><span>▶</span> يلزم متعصبة المذاهب ألا يدرسوا أصول الفقه!</div>
-                    <div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/c18QQM4_HPI" allowfullscreen></iframe></div>
-                </div>
-            </div>
-        </div>
+  <p class="intro">
+    اختر أحد الدروس من القوائم التالية وسيعمل مباشرة في المشغّل.
+  </p>
 
-        <div class="playlist-card">
-            <div class="playlist-toggle" onclick="togglePlaylist(this)">
-                <div>
-                    <span>الرد على اهل البدع</span>
-                    <span class="sub-title">(مجموعة من اهل العلم)</span>
-                </div>
-                <span>➕</span>
-            </div>
-            <div class="playlist-content">
-                <div class="video-box"><div class="video-title"><span>▶</span> فتوى العلامة الفوزان في الرد على المبتدعة</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ZaSZvEDSVng" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 2 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> فتوى الشيخ صالح ال الشيخ في الرد على الصوفيين</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/V2zoHxTF2oc" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 3 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> ضوابط التبديع للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/HT2sBnsc5go" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 4 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> التفريق بين الثناء على المبتدع والثناء على البدعة للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/paOYgu8Od_A" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 5 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> نماذج من استعداء السلف للسلطان على اهل البدع لحماية الدين الشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/_7f659kXPTI" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 6 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> رأي الشيخ عبدالعزيز الريس في مناظرة ومجادلة اهل البدع</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/JkgysIGp7v8" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 7 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> وجوب الشدة على اهل البدع بالاجماع للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/rMB2grnNrDY" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 8 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> من اخطاء المميعة طلب العلم عند اهل البدع للشيخ عبدالعزيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/-LxT_VvFOVU" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 9 -->
-                <div class="video-box"><div class="video-title"><span>▶</span>سبب عدم ذكر حسنات اهل البدع للشيخ عبدالعيز بن ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/02Gz_EPbsEI" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 10 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> فوائد الرد على المبتدعة وذكرهم بالاسماء للشيخ عبدالعزيز ب ريس الريس</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/9AWgJ5s0dR0" allowfullscreen></iframe></div></div>
-            </div>
-        </div>
+  <!-- مشغل الفيديو العلوي -->
 
-        <!-- 3. السلسلة الثالثة (مجهزة بـ 10 خانات) -->
-        <div class="playlist-card">
-            <div class="playlist-toggle" onclick="togglePlaylist(this)">
-                <div>
-                    <span>عنوان السلسلة الثالثة</span>
-                    <span class="sub-title">(اسم الشيخ)</span>
-                </div>
-                <span>➕</span>
-            </div>
-            <div class="playlist-content">
-                <!-- الفيديو 1 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 1</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 2 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 2</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 3 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 3</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 4 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 4</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 5 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 5</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 6 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 6</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 7 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 7</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 8 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 8</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 9 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 9</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 10 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 10</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-            </div>
-        </div>
+  <section class="player-box">
 
-        <!-- 4. السلسلة الرابعة (مجهزة بـ 10 خانات) -->
-        <div class="playlist-card">
-            <div class="playlist-toggle" onclick="togglePlaylist(this)">
-                <div>
-                    <span>عنوان السلسلة الرابعة</span>
-                    <span class="sub-title">(اسم الشيخ)</span>
-                </div>
-                <span>➕</span>
-            </div>
-            <div class="playlist-content">
-                <!-- الفيديو 1 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 1</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 2 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 2</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 3 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 3</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 4 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 4</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 5 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 5</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 6 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 6</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 7 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 7</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 8 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 8</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 9 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 9</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-                <!-- الفيديو 10 -->
-                <div class="video-box"><div class="video-title"><span>▶</span> عنوان الدرس 10</div><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/ضع_معرف_الفيديو_هنا" allowfullscreen></iframe></div></div>
-            </div>
-        </div>
+    <h2 class="player-heading">▶ مشغّل الدروس المرئية</h2>
 
+    <div class="player">
+      <iframe
+        id="videoPlayer"
+        src="about:blank"
+        title="مشغل الشبهات والردود"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
     </div>
 
-    <script>
-        function togglePlaylist(element) {
-            const card = element.parentElement;
-            card.classList.toggle('active');
-            const icon = element.querySelector('span:last-child');
-            icon.innerText = card.classList.contains('active') ? '➖' : '➕';
-        }
-    </script>
+    <h2 id="videoTitle">الشبهات والردود</h2>
+
+    <p id="videoAuthor">
+      اختر درسًا من القوائم لبدء المشاهدة.
+    </p>
+
+    <p class="player-note">
+      يتم تشغيل الدروس هنا داخل الصفحة دون الانتقال إلى موقع يوتيوب.
+    </p>
+
+  </section>
+
+
+  <!-- القائمة الأولى -->
+
+  <section class="playlist">
+
+    <button class="playlist-head"
+            type="button"
+            aria-expanded="false"
+            onclick="togglePlaylist(this)">
+
+      <strong>📚 متعصبة المذاهب — الشيخ عبدالعزيز بن ريس الريس</strong>
+      <span class="playlist-icon">➕</span>
+
+    </button>
+
+    <div class="playlist-body">
+      <div class="playlist-inner">
+        <div class="playlist-content">
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=mUB9CyCGqoM"
+               onclick="playVideo(event, 'mUB9CyCGqoM', 'كشف شبهات متعصبة المذاهب ورد أئمة الدعوة النجدية عليهم', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>كشف شبهات متعصبة المذاهب ورد أئمة الدعوة النجدية عليهم</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=N21X6Bs0BB4"
+               onclick="playVideo(event, 'N21X6Bs0BB4', 'أقوال النبلاء في نسف متعصبة المذاهب الجهلاء', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>أقوال النبلاء في نسف متعصبة المذاهب الجهلاء</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=Zrt92XjyuWg"
+               onclick="playVideo(event, 'Zrt92XjyuWg', 'متعصبة المذاهب بين الإفراط والتفريط', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>متعصبة المذاهب بين الإفراط والتفريط</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=LIFySpBegPU"
+               onclick="playVideo(event, 'LIFySpBegPU', 'يشترط متعصبة المذاهب شروطًا للاجتهاد لم توجد في أئمتهم', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>يشترط متعصبة المذاهب شروطًا للاجتهاد لم توجد في أئمتهم!</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=c18QQM4_HPI"
+               onclick="playVideo(event, 'c18QQM4_HPI', 'يلزم متعصبة المذاهب ألا يدرسوا أصول الفقه', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>يلزم متعصبة المذاهب ألا يدرسوا أصول الفقه!</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=6AX-ytRCMU0"
+               onclick="playVideo(event, '6AX-ytRCMU0', 'أربعة أوجه في بطلان القول بإغلاق باب الاجتهاد', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>أربعة أوجه في بطلان القول بإغلاق باب الاجتهاد</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=cUyzyKdCY0g"
+               onclick="playVideo(event, 'cUyzyKdCY0g', 'الرد على قول بعض متعصبة المذاهب: من من الفقهاء ألّف في الفقه بالدليل؟', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>الرد على قول بعض متعصبة المذاهب: من من الفقهاء ألّف في الفقه بالدليل؟</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=KttXsly4uXI"
+               onclick="playVideo(event, 'KttXsly4uXI', 'الحنابلة الجدد والفساد العقدي', 'الشيخ عبدالعزيز بن ريس الريس')">
+              <span class="play-icon">▶</span>
+              <span>الحنابلة الجدد والفساد العقدي</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- القائمة الثانية -->
+
+  <section class="playlist">
+
+    <button class="playlist-head"
+            type="button"
+            aria-expanded="false"
+            onclick="togglePlaylist(this)">
+
+      <strong>📖 الرد على أهل البدع</strong>
+      <span class="playlist-icon">➕</span>
+
+    </button>
+
+    <div class="playlist-body">
+      <div class="playlist-inner">
+        <div class="playlist-content">
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=wDHIPbYIDro"
+               onclick="playVideo(event, 'wDHIPbYIDro', 'الرد على بعض شبهات أهل البدع', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>الرد على بعض شبهات أهل البدع — الشيخ صالح الفوزان</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=eroYYvVc3KI"
+               onclick="playVideo(event, 'eroYYvVc3KI', 'الرد على الاحتجاج بجواز البدع بفعل بعض أهل العلم لها', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>الرد على الاحتجاج بجواز البدع بفعل بعض أهل العلم لها</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=inm1jzSD9ZA"
+               onclick="playVideo(event, 'inm1jzSD9ZA', 'ما حكم عدم الرد على أهل البدع؟', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>ما حكم عدم الرد على أهل البدع؟</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=695V4fYeaSg"
+               onclick="playVideo(event, '695V4fYeaSg', 'هل يجوز مجالسة أهل البدع من أجل دعوتهم إلى الحق؟', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>هل يجوز مجالسة أهل البدع من أجل دعوتهم إلى الحق؟</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=3DgkJX7-l0M"
+               onclick="playVideo(event, '3DgkJX7-l0M', 'حكم الرد على أهل البدع ونشر تلك الردود', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>حكم الرد على أهل البدع ونشر تلك الردود</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- القائمة الثالثة: الرد على العلمانية والليبرالية -->
+
+  <section class="playlist">
+
+    <button class="playlist-head"
+            type="button"
+            aria-expanded="false"
+            onclick="togglePlaylist(this)">
+
+      <strong>⚖️ الرد على العلمانية والليبرالية</strong>
+      <span class="playlist-icon">➕</span>
+
+    </button>
+
+    <div class="playlist-body">
+      <div class="playlist-inner">
+        <div class="playlist-content">
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=otMVIQ8rzGk"
+               onclick="playVideo(event, 'otMVIQ8rzGk', 'ما حكم العلمانية؟', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>ما حكم العلمانية؟ — الشيخ صالح الفوزان</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=z7RjLicdGLA"
+               onclick="playVideo(event, 'z7RjLicdGLA', 'ما حكم العلمانية؟', 'من دروس أهل العلم')">
+              <span class="play-icon">▶</span>
+              <span>ما حكم العلمانية؟ — من دروس أهل العلم</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=dOkHjol3t4o"
+               onclick="playVideo(event, 'dOkHjol3t4o', 'ما هي العلمانية؟ وما موقفنا منها؟', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>ما هي العلمانية؟ وما موقفنا منها؟ — الشيخ صالح الفوزان</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=QX7pd5tvxzI"
+               onclick="playVideo(event, 'QX7pd5tvxzI', 'هل يوجد فرق بين العلمانية والليبرالية؟', 'الشيخ صالح الفوزان')">
+              <span class="play-icon">▶</span>
+              <span>هل يوجد فرق بين العلمانية والليبرالية؟ — الشيخ صالح الفوزان</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=dknuUVc4tL4"
+               onclick="playVideo(event, 'dknuUVc4tL4', 'ما معنى العلمانية وحكم المنتسبين إليها؟', 'الشيخ عبدالعزيز بن باز')">
+              <span class="play-icon">▶</span>
+              <span>ما معنى العلمانية وحكم المنتسبين إليها؟ — الشيخ ابن باز</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=ICKRsavPDEs"
+               onclick="playVideo(event, 'ICKRsavPDEs', 'ما حكم من يتسمى بالعلماني أو الليبرالي؟', 'الشيخ محمد بن صالح العثيمين')">
+              <span class="play-icon">▶</span>
+              <span>ما حكم من يتسمى بالعلماني أو الليبرالي؟ — الشيخ ابن عثيمين</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- القائمة الرابعة: الخوارج وطاعة ولي الأمر -->
+
+  <section class="playlist">
+
+    <button class="playlist-head"
+            type="button"
+            aria-expanded="false"
+            onclick="togglePlaylist(this)">
+
+      <strong>⚔️ الرد على الخوارج والتحذير من فكرهم</strong>
+      <span class="playlist-icon">➕</span>
+
+    </button>
+
+    <div class="playlist-body">
+      <div class="playlist-inner">
+        <div class="playlist-content">
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=cWQobbKA-Tg"
+               onclick="playVideo(event, 'cWQobbKA-Tg', 'ما قاله الخوارج والمعتزلة في العصاة والكفار', 'نور على الدرب')">
+              <span class="play-icon">▶</span>
+              <span>ما قاله الخوارج والمعتزلة في العصاة والكفار — نور على الدرب</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=3wGPEHj7h_M"
+               onclick="playVideo(event, '3wGPEHj7h_M', 'طاعة ولي الأمر', 'الشيخ محمد بن صالح العثيمين')">
+              <span class="play-icon">▶</span>
+              <span>طاعة ولي الأمر — الشيخ ابن عثيمين</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=Nt9v0pxT30Q"
+               onclick="playVideo(event, 'Nt9v0pxT30Q', 'صفات الخوارج وعلاماتهم', 'من دروس أهل العلم')">
+              <span class="play-icon">▶</span>
+              <span>صفات الخوارج وعلاماتهم</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=oMLL0VTWdxE"
+               onclick="playVideo(event, 'oMLL0VTWdxE', 'التحذير من فكر الخوارج', 'من دروس أهل العلم')">
+              <span class="play-icon">▶</span>
+              <span>التحذير من فكر الخوارج</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=S3e0PEgShJ8"
+               onclick="playVideo(event, 'S3e0PEgShJ8', 'خطر الغلو والتكفير', 'من دروس أهل العلم')">
+              <span class="play-icon">▶</span>
+              <span>خطر الغلو والتكفير</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=zi3hvvMrBvo"
+               onclick="playVideo(event, 'zi3hvvMrBvo', 'منهج أهل السنة في التعامل مع الخوارج', 'من دروس أهل العلم')">
+              <span class="play-icon">▶</span>
+              <span>منهج أهل السنة في التعامل مع الخوارج</span>
+            </a>
+          </div>
+
+          <div class="lesson">
+            <a class="lesson-link"
+               href="https://www.youtube.com/watch?v=IayiOVbyXfo"
+               onclick="playVideo(event, 'IayiOVbyXfo', 'التحذير من التكفير بغير حق', 'من دروس أهل العلم')">
+              <span class="play-icon">▶</span>
+              <span>التحذير من التكفير بغير حق</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <a class="back" href="/">
+    ← العودة إلى الصفحة الرئيسية
+  </a>
+
+</main>
+
+<footer>
+  منصة العلوم الشرعية — الشبهات والردود
+</footer>
+
+
+<script>
+
+  // تشغيل الفيديو داخل المشغل العلوي
+
+  function playVideo(event, videoId, title, author) {
+
+    if (event) {
+      event.preventDefault();
+    }
+
+    const player = document.getElementById("videoPlayer");
+    const titleElement = document.getElementById("videoTitle");
+    const authorElement = document.getElementById("videoAuthor");
+
+    player.src =
+      "https://www.youtube-nocookie.com/embed/" +
+      encodeURIComponent(videoId) +
+      "?autoplay=1&rel=0";
+
+    titleElement.textContent = title;
+    authorElement.textContent = author;
+
+    // إزالة تمييز الدرس السابق
+
+    document.querySelectorAll(".lesson-link").forEach(function(link) {
+      link.classList.remove("playing");
+    });
+
+    // تمييز الدرس الحالي
+
+    if (event && event.currentTarget) {
+      event.currentTarget.classList.add("playing");
+    }
+
+    // الانتقال إلى المشغل
+
+    document.querySelector(".player-box").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }
+
+
+  // فتح وإغلاق القوائم
+
+  function togglePlaylist(button) {
+
+    const playlist = button.closest(".playlist");
+
+    const isActive = playlist.classList.toggle("active");
+
+    button.setAttribute("aria-expanded", isActive ? "true" : "false");
+
+    const icon = button.querySelector(".playlist-icon");
+
+    icon.textContent = isActive ? "➖" : "➕";
+
+  }
+
+</script>
 
 </body>
 </html>

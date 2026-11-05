@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المقاطع القصيرة | منصة العلوم الشرعية</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: #0e1725;
+      color: #f4f6fa;
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.8;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      padding: 13px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: #17263a;
+      border-bottom: 1px solid #34445d;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #dfb96e;
+      font-size: 23px;
+    }
+
+    a {
+      color: #dfb96e;
+      text-decoration: none;
+    }
+
+    header nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .wrap {
+      width: min(1100px, 94%);
+      margin: 15px auto;
+    }
+
+    .intro {
+      color: #bac6d6;
+      text-align: center;
+      margin: 8px 0 15px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+
+    button {
+      font: inherit;
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 13px;
+      cursor: pointer;
+      background: #dfb96e;
+      color: #17202c;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .add-button {
+      font-size: 14px;
+      padding: 7px 15px;
+      border-radius: 20px;
+      box-shadow: 0 3px 12px #0004;
+      white-space: nowrap;
+    }
+
+    .subtle {
+      background: #2a3b53;
+      color: #f4f6fa;
+    }
+
+    .delete-button {
+      background: #8e3038;
+      color: #fff;
+    }
+
+    .admin-corner {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 1100;
+      padding: 7px 14px;
+      border-radius: 20px;
+      background: #dfb96e;
+      color: #17202c;
+      font-size: 13px;
+      font-weight: bold;
+      box-shadow: 0 3px 12px #0006;
+    }
+
+    /* منطقة الشورتس */
+    .feed {
+      width: 100%;
+      height: min(78svh, 900px);
+      min-height: 480px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      padding: 8px 5px 20px;
+      scroll-snap-type: y mandatory;
+      overscroll-behavior-y: contain;
+      scrollbar-width: thin;
+      scrollbar-color: #526782 #17263a;
+    }
+
+    .feed::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .feed::-webkit-scrollbar-thumb {
+      background: #526782;
+      border-radius: 10px;
+    }
+
+    .short {
+      flex: 0 0 auto;
+      width: min(100%, 460px);
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      background: transparent;
+      border: 0;
+      border-radius: 15px;
+      overflow: visible;
+      padding: 5px 0 20px;
+    }
+
+    /* الفيديو العمودي */
+    .video {
+      position: relative;
+      width: min(100%, 405px);
+      aspect-ratio: 9 / 16;
+      height: auto;
+      max-height: 65svh;
+      background: #05080d;
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 0 auto;
+      box-shadow: 0 8px 30px #0007;
+    }
+
+    iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .body {
+      width: min(100%, 405px);
+      padding: 12px 5px;
+    }
+
+    .body h2 {
+      font-size: 19px;
+      margin: 0 0 5px;
+    }
+
+    .publisher {
+      color: #dfb96e;
+      font-size: 14px;
+    }
+
+    .description {
+      color: #bac6d6;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .comments {
+      border-top: 1px solid #34445d;
+      padding-top: 12px;
+    }
+
+    .comment {
+      background: #22334a;
+      border-radius: 8px;
+      padding: 9px 11px;
+      margin: 8px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .comment small {
+      color: #dfb96e;
+    }
+
+    .reply {
+      margin: 8px 18px 8px 0;
+      padding-right: 10px;
+      border-right: 2px solid #526782;
+    }
+
+    .comment-form {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #465a75;
+      background: #101c2c;
+      color: #fff;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 75px;
+      resize: vertical;
+    }
+
+    .empty {
+      text-align: center;
+      color: #bac6d6;
+      padding: 35px;
+      width: 100%;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* النوافذ المنبثقة */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      z-index: 2000;
+    }
+
+    .modal {
+      width: min(450px, 100%);
+      background: #18263a;
+      border: 1px solid #465a75;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 15px 50px #0008;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .modal-header h2 {
+      color: #dfb96e;
+      font-size: 19px;
+      margin: 0;
+    }
+
+    .close-button {
+      background: #2a3b53;
+      color: white;
+      font-size: 20px;
+      padding: 3px 11px;
+    }
+
+    .upload-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .upload-form label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+      color: #dce5f1;
+    }
+
+    .upload-note {
+      font-size: 13px;
+      color: #bac6d6;
+      margin: 0;
+    }
+
+    .message {
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.success {
+      display: block;
+      background: #173e31;
+      color: #a9f0cc;
+    }
+
+    .message.error {
+      display: block;
+      background: #512b32;
+      color: #ffc1c1;
+    }
+
+    .reply-button {
+      background: transparent;
+      color: #dfb96e;
+      padding: 3px 0;
+      font-size: 13px;
+    }
+
+    .admin-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .admin-form input {
+      direction: ltr;
+      text-align: left;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        justify-content: center;
+        text-align: center;
+        padding-left: 75px;
+      }
+
+      header h1 {
+        width: 100%;
+      }
+
+      header nav {
+        justify-content: center;
+      }
+
+      .wrap {
+        width: 96%;
+        margin-top: 8px;
+      }
+
+      .intro {
+        font-size: 13px;
+        margin: 5px 0 10px;
+      }
+
+      .feed {
+        height: 76svh;
+        min-height: 420px;
+        gap: 12px;
+      }
+
+      .video {
+        width: min(100%, 360px);
+        max-height: 62svh;
+      }
+
+      .admin-corner {
+        top: 12px;
+        left: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎬 المقاطع القصيرة</h1>
+
+  <nav>
+    <a href="/">الرئيسية</a>
+    <a href="/logout">تسجيل الخروج</a>
+
+    <div class="top-actions">
+      <button type="button" class="add-button" onclick="openUploadModal()">
+        ＋ أضف مقطع
+      </button>
+    </div>
+  </nav>
+</header>
+
+<button type="button" class="admin-corner" onclick="openAdminModal()">
+  أدمن
+</button>
+
+<main class="wrap">
+
+  <p class="intro">
+    مقاطع نافعة في طلب العلم الشرعي، مع إمكانية التعليق والمشاركة.
+  </p>
+
+  <div id="pageMessage" class="message"></div>
+
+  <section class="feed" id="shortsFeed">
+    <div class="empty">جارٍ تحميل المقاطع...</div>
+  </section>
+
+</main>
+
+
+<!-- نافذة رفع المقطع -->
+<div class="modal-overlay hidden" id="uploadModal">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h2>إرسال مقطع للمراجعة</h2>
+      <button type="button" class="close-button"
+              onclick="closeUploadModal()">×</button>
+    </div>
+
+    <p class="upload-note">
+      أرسل المقطع وسيظهر بعد مراجعته وموافقة الإدارة.
+    </p>
+
+    <form class="upload-form" id="uploadForm">
+
+      <div>
+        <label for="videoTitle">عنوان المقطع</label>
+        <input id="videoTitle" name="title" type="text"
+               placeholder="اكتب عنوان المقطع" maxlength="200" required>
+      </div>
+
+      <div>
+        <label for="videoUrl">رابط الفيديو</label>
+        <input id="videoUrl" name="video_url" type="url"
+               placeholder="https://www.youtube.com/watch?v=..." required>
+      </div>
+
+      <div>
+        <label for="videoDescription">وصف المقطع (اختياري)</label>
+        <textarea id="videoDescription" name="description"
+                  placeholder="اكتب وصفًا مختصرًا للمقطع..."></textarea>
+      </div>
+
+      <button type="submit" id="uploadSubmit">إرسال للمراجعة</button>
+      <div id="uploadMessage" class="message"></div>
+
+    </form>
+  </div>
+</div>
+
+
+<!-- نافذة دخول الأدمن -->
+<div class="modal-overlay hidden" id="adminModal">
+  <div class="modal">
+
+    <div class="modal-header">
+      <h2>دخول الإدارة</h2>
+      <button type="button" class="close-button"
+              onclick="closeAdminModal()">×</button>
+    </div>
+
+    <p class="upload-note">
+      أدخل الرمز السري للانتقال إلى لوحة الإدارة.
+    </p>
+
+    <form class="admin-form" id="adminForm">
+      <input
+        type="password"
+        id="adminCode"
+        placeholder="الرمز السري"
+        autocomplete="current-password"
+        required>
+
+      <button type="submit" id="adminSubmit">دخول</button>
+      <div id="adminMessage" class="message"></div>
+    </form>
+
+  </div>
+</div>
+
+
+<script>
+  let loggedIn = false;
+  let currentUserId = null;
+
+  let activeShort = null;
+  let shortObserver = null;
+  let isResettingFeed = false;
+
+
+  // أوامر تشغيل وإيقاف فيديو يوتيوب
+  function sendYouTubeCommand(iframe, command) {
+
+    if (!iframe || !iframe.contentWindow) return;
+
+    iframe.contentWindow.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: command,
+        args: []
+      }),
+      "*"
+    );
+  }
+
+
+  // تشغيل الفيديو الحالي وإيقاف السابق
+  function activateShort(article) {
+
+    if (!article) return;
+
+    if (activeShort === article) return;
+
+    if (activeShort) {
+
+      const oldFrame = activeShort.querySelector("iframe");
+
+      if (oldFrame) {
+        sendYouTubeCommand(oldFrame, "pauseVideo");
+      }
+    }
+
+    activeShort = article;
+
+    const frame = article.querySelector("iframe");
+
+    if (frame) {
+      sendYouTubeCommand(frame, "mute");
+      sendYouTubeCommand(frame, "playVideo");
+    }
+  }
+
+
+  // مراقبة المقطع الظاهر على الشاشة
+  function setupShortObserver() {
+
+    const feed = document.getElementById("shortsFeed");
+
+    if (shortObserver) {
+      shortObserver.disconnect();
+    }
+
+    shortObserver = new IntersectionObserver(function(entries) {
+
+      let bestEntry = null;
+
+      entries.forEach(entry => {
+
+        if (
+          entry.isIntersecting &&
+          (!bestEntry ||
+           entry.intersectionRatio > bestEntry.intersectionRatio)
+        ) {
+          bestEntry = entry;
+        }
+      });
+
+      if (bestEntry && bestEntry.intersectionRatio >= 0.55) {
+        activateShort(bestEntry.target);
+      }
+
+    }, {
+      root: feed,
+      threshold: [0.25, 0.55, 0.75, 0.9]
+    });
+
+    document.querySelectorAll(".short").forEach(article => {
+      shortObserver.observe(article);
+    });
+  }
+
+
+  // التمرير اللانهائي
+  function setupInfiniteScroll() {
+
+    const feed = document.getElementById("shortsFeed");
+
+    feed.addEventListener("scroll", function() {
+
+      if (isResettingFeed) return;
+
+      const reachedEnd =
+        feed.scrollTop + feed.clientHeight >= feed.scrollHeight - 5;
+
+      if (reachedEnd && feed.children.length > 1) {
+
+        isResettingFeed = true;
+
+        feed.scrollTop = 0;
+
+        const firstShort = feed.querySelector(".short");
+
+        if (firstShort) {
+          activateShort(firstShort);
+        }
+
+        setTimeout(function() {
+          isResettingFeed = false;
+        }, 300);
+      }
+
+    });
+  }
+
+
+  // معرفة حالة تسجيل الدخول
+  async function checkLogin() {
+
+    try {
+
+      const response = await fetch("/api/me", {
+        cache: "no-store"
+      });
+
+      const data = await response.json();
+
+      loggedIn = data.logged_in === true;
+      currentUserId = loggedIn && data.user
+        ? Number(data.user.id)
+        : null;
+
+      return loggedIn;
+
+    } catch (error) {
+
+      loggedIn = false;
+      currentUserId = null;
+
+      return false;
+    }
+  }
+
+
+  // فتح نافذة الرفع
+  async function openUploadModal() {
+
+    const isLoggedIn = await checkLogin();
+
+    if (!isLoggedIn) {
+      alert("يجب تسجيل الدخول أولاً لإرسال مقطع.");
+      window.location.href = "/login?next=/shorts";
+      return;
+    }
+
+    document.getElementById("uploadModal").classList.remove("hidden");
+  }
+
+
+  // إغلاق نافذة الرفع
+  function closeUploadModal() {
+    document.getElementById("uploadModal").classList.add("hidden");
+  }
+
+
+  // فتح نافذة الأدمن
+  function openAdminModal() {
+
+    document.getElementById("adminModal").classList.remove("hidden");
+
+    document.getElementById("adminCode").focus();
+  }
+
+
+  // إغلاق نافذة الأدمن
+  function closeAdminModal() {
+
+    document.getElementById("adminModal").classList.add("hidden");
+
+    document.getElementById("adminCode").value = "";
+
+    document.getElementById("adminMessage").className = "message";
+  }
+
+
+  // إرسال الرمز إلى الخادم للتحقق
+  document.getElementById("adminForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const button = document.getElementById("adminSubmit");
+    const message = document.getElementById("adminMessage");
+    const code = document.getElementById("adminCode").value;
+
+    button.disabled = true;
+    button.textContent = "جارٍ التحقق...";
+
+    try {
+
+      const response = await fetch("/admin/unlock", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ code: code })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+
+        showMessage(
+          message,
+          data.message || "الرمز السري غير صحيح.",
+          "error"
+        );
+
+        return;
+      }
+
+      showMessage(
+        message,
+        "تم التحقق بنجاح، جارٍ فتح لوحة الإدارة...",
+        "success"
+      );
+
+      window.location.href = data.redirect || "/admin";
+
+    } catch (error) {
+
+      showMessage(
+        message,
+        "تعذر الاتصال بالخادم. حاول مرة أخرى.",
+        "error"
+      );
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "دخول";
+    }
+  });
+
+
+  // إغلاق النوافذ عند الضغط خارجها
+  document.getElementById("uploadModal").addEventListener("click", function(event) {
+
+    if (event.target === this) {
+      closeUploadModal();
+    }
+  });
+
+  document.getElementById("adminModal").addEventListener("click", function(event) {
+
+    if (event.target === this) {
+      closeAdminModal();
+    }
+  });
+
+
+  // عرض رسالة
+  function showMessage(element, message, type) {
+
+    element.textContent = message;
+
+    element.className = "message " + type;
+  }
+
+
+  // استخراج معرف فيديو يوتيوب
+  function getYouTubeId(url) {
+
+    try {
+
+      const parsed = new URL(url);
+
+      let id = "";
+
+      if (
+        parsed.hostname === "youtu.be" ||
+        parsed.hostname === "www.youtu.be"
+      ) {
+
+        id = parsed.pathname.split("/")[1];
+
+      } else if (
+        parsed.hostname.includes("youtube.com") ||
+        parsed.hostname.includes("youtube-nocookie.com")
+      ) {
+
+        if (parsed.pathname === "/watch") {
+
+          id = parsed.searchParams.get("v");
+
+        } else {
+
+          const parts = parsed.pathname.split("/");
+
+          const index = parts.findIndex(part =>
+            ["embed", "shorts", "live"].includes(part)
+          );
+
+          if (index !== -1) {
+            id = parts[index + 1];
+          }
+        }
+      }
+
+      if (!id || !/^[a-zA-Z0-9_-]{11}$/.test(id)) {
+        return null;
+      }
+
+      return id;
+
+    } catch (error) {
+
+      return null;
+    }
+  }
+
+
+  // خلط ترتيب المقاطع عشوائياً
+  function shuffleShorts(shorts) {
+
+    const shuffled = [...shorts];
+
+    for (let i = shuffled.length - 1; i > 0; i--) {
+
+      const j = Math.floor(Math.random() * (i + 1));
+
+      [shuffled[i], shuffled[j]] =
+        [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
+  }
+
+
+  // اختيار بداية عشوائية للقائمة
+  function rotateShortsRandomly(shorts) {
+
+    if (shorts.length <= 1) return shorts;
+
+    const randomIndex = Math.floor(
+      Math.random() * shorts.length
+    );
+
+    return [
+      ...shorts.slice(randomIndex),
+      ...shorts.slice(0, randomIndex)
+    ];
+  }
+
+
+  // إرسال مقطع للمراجعة
+  document.getElementById("uploadForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const button = document.getElementById("uploadSubmit");
+    const message = document.getElementById("uploadMessage");
+
+    const title = document.getElementById("videoTitle").value.trim();
+    const videoUrl = document.getElementById("videoUrl").value.trim();
+    const description = document.getElementById("videoDescription").value.trim();
+
+    if (!getYouTubeId(videoUrl)) {
+
+      showMessage(
+        message,
+        "رابط يوتيوب غير صالح. تأكد من الرابط.",
+        "error"
+      );
+
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "جارٍ الإرسال...";
+
+    try {
+
+      const response = await fetch("/api/shorts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          title: title,
+          video_url: videoUrl,
+          description: description
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+
+        if (response.status === 401) {
+
+          showMessage(
+            message,
+            "يجب تسجيل الدخول أولاً.",
+            "error"
+          );
+
+          return;
+        }
+
+        throw new Error(
+          data.message || "تعذر إرسال المقطع."
+        );
+      }
+
+      showMessage(
+        message,
+        data.message || "تم إرسال المقطع للمراجعة بنجاح.",
+        "success"
+      );
+
+      this.reset();
+
+      setTimeout(() => {
+
+        closeUploadModal();
+
+        message.className = "message";
+
+      }, 1800);
+
+    } catch (error) {
+
+      showMessage(
+        message,
+        error.message,
+        "error"
+      );
+
+    } finally {
+
+      button.disabled = false;
+      button.textContent = "إرسال للمراجعة";
+    }
+  });
+
+
+  // تحميل المقاطع المقبولة
+  async function loadShorts() {
+
+    const feed = document.getElementById("shortsFeed");
+
+    try {
+
+      const response = await fetch("/api/shorts", {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error("تعذر تحميل المقاطع.");
+      }
+
+      const data = await response.json();
+
+      // Python يرجع المقاطع داخل الخاصية shorts
+      let shorts = data.shorts || [];
+
+      feed.innerHTML = "";
+
+      if (!Array.isArray(shorts) || shorts.length === 0) {
+
+        feed.innerHTML =
+          '<div class="empty">لا توجد مقاطع منشورة حاليًا.</div>';
+
+        return;
+      }
+
+      // خلط المقاطع واختيار نقطة بداية عشوائية
+      shorts = shuffleShorts(shorts);
+
+      shorts = rotateShortsRandomly(shorts);
+
+      shorts.forEach(video => {
+        feed.appendChild(createShortCard(video));
+      });
+
+      // تشغيل ومراقبة المقاطع
+      setupShortObserver();
+
+      // البدء بأول مقطع بعد العشوائية
+      const firstShort = feed.querySelector(".short");
+
+      if (firstShort) {
+        activateShort(firstShort);
+      }
+
+    } catch (error) {
+
+      console.error("Load shorts error:", error);
+
+      feed.innerHTML =
+        '<div class="empty">تعذر تحميل المقاطع. حاول تحديث الصفحة.</div>';
+    }
+  }
+
+
+  // إنشاء بطاقة المقطع
+  function createShortCard(video) {
+
+    const article = document.createElement("article");
+
+    article.className = "short";
+
+    article.dataset.shortId = video.id;
+
+    const videoId = getYouTubeId(video.video_url);
+
+    const videoBox = document.createElement("div");
+
+    videoBox.className = "video";
+
+    if (videoId) {
+
+      const iframe = document.createElement("iframe");
+
+      iframe.src =
+        "https://www.youtube-nocookie.com/embed/" +
+        videoId +
+        "?autoplay=0&mute=1&playsinline=1&enablejsapi=1&loop=1&playlist=" +
+        videoId +
+        "&rel=0";
+
+      iframe.title = video.title;
+
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+      iframe.allowFullscreen = true;
+
+      iframe.loading = "lazy";
+
+      // إذا اكتمل تحميل الفيديو وهو المقطع النشط، شغله
+      iframe.addEventListener("load", function() {
+
+        if (activeShort === article) {
+
+          sendYouTubeCommand(iframe, "mute");
+
+          sendYouTubeCommand(iframe, "playVideo");
+        }
+
+      });
+
+      videoBox.appendChild(iframe);
+
+    } else {
+
+      videoBox.textContent = "رابط الفيديو غير صالح";
+    }
+
+
+    const body = document.createElement("div");
+
+    body.className = "body";
+
+    const title = document.createElement("h2");
+
+    title.textContent = video.title;
+
+    const publisher = document.createElement("div");
+
+    publisher.className = "publisher";
+
+    publisher.textContent =
+      "بواسطة: " + (video.username || "مستخدم");
+
+    const description = document.createElement("div");
+
+    description.className = "description";
+
+    description.textContent = video.description || "";
+
+    const actions = document.createElement("div");
+
+    actions.className = "actions";
+
+
+    // زر الإعجاب
+    const likeButton = document.createElement("button");
+
+    likeButton.type = "button";
+
+    likeButton.className = "subtle";
+
+    likeButton.dataset.liked = "false";
+
+    likeButton.innerHTML = '♡ إعجاب <span>0</span>';
+
+    likeButton.addEventListener("click", function() {
+      likeShort(this);
+    });
+
+    // تحميل عدد الإعجابات وحالة المستخدم من Supabase
+    loadLikeStatus(video.id, likeButton);
+
+
+    // زر التعليقات
+    const commentsButton = document.createElement("button");
+
+    commentsButton.type = "button";
+
+    commentsButton.className = "subtle";
+
+    commentsButton.textContent = "التعليقات";
+
+
+    // زر الصوت
+    const soundButton = document.createElement("button");
+
+    soundButton.type = "button";
+
+    soundButton.textContent = "تشغيل الصوت";
+
+    soundButton.dataset.muted = "true";
+
+
+    const comments = document.createElement("div");
+
+    comments.className = "comments hidden";
+
+    commentsButton.addEventListener("click", function() {
+      comments.classList.toggle("hidden");
+    });
+
+
+    // تشغيل وإيقاف الصوت بدون إعادة تحميل الفيديو
+    soundButton.addEventListener("click", function() {
+
+      const frame = videoBox.querySelector("iframe");
+
+      if (!frame) return;
+
+      const isMuted = this.dataset.muted === "true";
+
+      if (isMuted) {
+
+        sendYouTubeCommand(frame, "unMute");
+
+        sendYouTubeCommand(frame, "playVideo");
+
+        this.dataset.muted = "false";
+
+        this.textContent = "كتم الصوت";
+
+      } else {
+
+        sendYouTubeCommand(frame, "mute");
+
+        this.dataset.muted = "true";
+
+        this.textContent = "تشغيل الصوت";
+      }
+
+    });
+
+
+    // زر الحذف يظهر لصاحب المقطع فقط
+    if (
+      loggedIn &&
+      currentUserId !== null &&
+      Number(video.user_id) === currentUserId
+    ) {
+
+      const deleteButton = document.createElement("button");
+
+      deleteButton.type = "button";
+      deleteButton.className = "delete-button";
+      deleteButton.textContent = "حذف المقطع";
+
+      deleteButton.addEventListener("click", function() {
+        deleteShort(video.id, article, this);
+      });
+
+      actions.appendChild(deleteButton);
+    }
+
+    actions.append(
+      likeButton,
+      commentsButton,
+      soundButton
+    );
+
+
+    // قسم التعليقات
+    const commentsTitle = document.createElement("h3");
+
+    commentsTitle.textContent = "التعليقات";
+
+    const commentsList = document.createElement("div");
+
+    commentsList.className = "comments-list";
+
+
+    // نموذج كتابة تعليق
+    const commentForm = document.createElement("form");
+
+    commentForm.className = "comment-form";
+
+    const commentInput = document.createElement("textarea");
+
+    commentInput.name = "content";
+
+    commentInput.placeholder = "اكتب تعليقك...";
+
+    commentInput.required = true;
+
+    const commentSubmit = document.createElement("button");
+
+    commentSubmit.type = "submit";
+
+    commentSubmit.textContent = "إرسال التعليق";
+
+    commentForm.append(
+      commentInput,
+      commentSubmit
+    );
+
+
+    commentForm.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+      const isLoggedIn = await checkLogin();
+
+      if (!isLoggedIn) {
+
+        alert("يجب تسجيل الدخول للتعليق.");
+
+        window.location.href = "/login?next=/shorts";
+
+        return;
+      }
+
+      await sendComment(
+        video.id,
+        commentInput.value,
+        null,
+        commentsList,
+        commentInput
+      );
+
+    });
+
+
+    comments.append(
+      commentsTitle,
+      commentsList
+    );
+
+    if (loggedIn) {
+
+      comments.appendChild(commentForm);
+
+    } else {
+
+      const loginText = document.createElement("p");
+
+      loginText.textContent =
+        "للتعليق، يرجى تسجيل الدخول.";
+
+      const loginLink = document.createElement("a");
+
+      loginLink.href = "/login?next=/shorts";
+
+      loginLink.textContent = "تسجيل الدخول";
+
+      loginText.append(" ", loginLink);
+
+      comments.appendChild(loginText);
+    }
+
+
+    body.append(
+      title,
+      publisher,
+      description,
+      actions,
+      comments
+    );
+
+    article.append(
+      videoBox,
+      body
+    );
+
+    loadComments(
+      video.id,
+      commentsList
+    );
+
+    return article;
+  }
+
+
+  // حذف المقطع من حساب صاحبه فقط
+  async function deleteShort(shortId, article, button) {
+
+    const isLoggedIn = await checkLogin();
+
+    if (!isLoggedIn) {
+      alert("يجب تسجيل الدخول أولاً.");
+      window.location.href = "/login?next=/shorts";
+      return;
+    }
+
+    if (!confirm("هل أنت متأكد أنك تريد حذف هذا المقطع نهائياً؟")) {
+      return;
+    }
+
+    if (button.disabled) return;
+
+    button.disabled = true;
+    button.textContent = "جارٍ الحذف...";
+
+    try {
+
+      const response = await fetch(
+        "/api/shorts/" + encodeURIComponent(shortId),
+        { method: "DELETE" }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "تعذر حذف المقطع.");
+      }
+
+      if (activeShort === article) {
+        const frame = article.querySelector("iframe");
+        if (frame) sendYouTubeCommand(frame, "pauseVideo");
+        activeShort = null;
+      }
+
+      if (shortObserver) {
+        shortObserver.unobserve(article);
+      }
+
+      article.remove();
+
+      const feed = document.getElementById("shortsFeed");
+
+      if (!feed.querySelector(".short")) {
+        feed.innerHTML =
+          '<div class="empty">لا توجد مقاطع منشورة حاليًا.</div>';
+      } else {
+        setupShortObserver();
+      }
+
+      showMessage(
+        document.getElementById("pageMessage"),
+        data.message || "تم حذف المقطع بنجاح.",
+        "success"
+      );
+
+    } catch (error) {
+
+      alert(error.message);
+      button.disabled = false;
+      button.textContent = "حذف المقطع";
+    }
+  }
+
+
+  // الإعجاب المحفوظ في قاعدة البيانات السحابية
+  async function likeShort(button) {
+
+    const article = button.closest(".short");
+
+    if (!article) return;
+
+    const shortId = article.dataset.shortId;
+
+    if (!shortId) return;
+
+    const isLoggedIn = await checkLogin();
+
+    if (!isLoggedIn) {
+
+      alert("يجب تسجيل الدخول للإعجاب.");
+
+      window.location.href = "/login?next=/shorts";
+
+      return;
+    }
+
+    if (button.disabled) return;
+
+    button.disabled = true;
+
+    try {
+
+      const liked = button.dataset.liked === "true";
+
+      const response = await fetch(
+        "/api/shorts/" + shortId + "/likes",
+        {
+          method: liked ? "DELETE" : "POST"
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+
+        throw new Error(
+          data.message || "تعذر تسجيل الإعجاب."
+        );
+      }
+
+      button.dataset.liked = String(data.liked);
+
+      const count = button.querySelector("span");
+
+      count.textContent = data.likes_count;
+
+      button.firstChild.textContent =
+        data.liked ? "♥ أعجبني " : "♡ إعجاب ";
+
+    } catch (error) {
+
+      alert(error.message);
+
+    } finally {
+
+      button.disabled = false;
+    }
+  }
+
+
+  // تحميل حالة الإعجاب وعدده من قاعدة البيانات
+  async function loadLikeStatus(shortId, button) {
+
+    try {
+
+      const response = await fetch(
+        "/api/shorts/" + shortId + "/likes",
+        { cache: "no-store" }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) return;
+
+      button.dataset.liked = String(data.liked);
+
+      button.querySelector("span").textContent =
+        data.likes_count;
+
+      button.firstChild.textContent =
+        data.liked ? "♥ أعجبني " : "♡ إعجاب ";
+
+    } catch (error) {
+
+      console.error("Load likes error:", error);
+    }
+  }
+
+
+  // إرسال تعليق أو رد
+  async function sendComment(shortId, content, parentId, list, input) {
+
+    const text = content.trim();
+
+    if (!text) return;
+
+    try {
+
+      const response = await fetch(
+        "/api/shorts/" + shortId + "/comments",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            content: text,
+            parent_id: parentId
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+
+        throw new Error(
+          data.message || "تعذر إرسال التعليق."
+        );
+      }
+
+      input.value = "";
+
+      await loadComments(shortId, list);
+
+    } catch (error) {
+
+      alert(error.message);
+    }
+  }
+
+
+  // تحميل التعليقات والردود
+  async function loadComments(shortId, container) {
+
+    try {
+
+      const response = await fetch(
+        "/api/shorts/" + shortId + "/comments",
+        { cache: "no-store" }
+      );
+
+      if (!response.ok) {
+        throw new Error("تعذر تحميل التعليقات.");
+      }
+
+      const data = await response.json();
+
+      // Python يرجع التعليقات داخل الخاصية comments
+      const comments = data.comments || [];
+
+      container.innerHTML = "";
+
+      if (!Array.isArray(comments) || comments.length === 0) {
+
+        const empty = document.createElement("p");
+
+        empty.className = "publisher";
+
+        empty.textContent = "لا توجد تعليقات بعد.";
+
+        container.appendChild(empty);
+
+        return;
+      }
+
+      const roots = comments.filter(
+        comment => !comment.parent_id
+      );
+
+      roots.forEach(comment => {
+
+        const box = createCommentElement(
+          comment,
+          comments,
+          shortId,
+          container
+        );
+
+        container.appendChild(box);
+      });
+
+    } catch (error) {
+
+      console.error("Load comments error:", error);
+
+      container.textContent = "تعذر تحميل التعليقات.";
+    }
+  }
+
+
+  // إنشاء تعليق مع الردود
+  function createCommentElement(comment, allComments, shortId, container) {
+
+    const box = document.createElement("div");
+
+    box.className = "comment";
+
+    const username = document.createElement("small");
+
+    username.textContent = comment.username;
+
+    const content = document.createElement("div");
+
+    content.textContent = comment.content;
+
+    box.append(
+      username,
+      content
+    );
+
+
+    const replyButton = document.createElement("button");
+
+    replyButton.type = "button";
+
+    replyButton.className = "reply-button";
+
+    replyButton.textContent = "رد";
+
+
+    replyButton.addEventListener("click", async function() {
+
+      const isLoggedIn = await checkLogin();
+
+      if (!isLoggedIn) {
+
+        alert("يجب تسجيل الدخول للرد.");
+
+        window.location.href = "/login?next=/shorts";
+
+        return;
+      }
+
+      const replyText = prompt("اكتب ردك:");
+
+      if (replyText && replyText.trim()) {
+
+        await sendComment(
+          shortId,
+          replyText,
+          comment.id,
+          container,
+          { value: "" }
+        );
+      }
+
+    });
+
+
+    box.appendChild(replyButton);
+
+
+    const replies = allComments.filter(item =>
+      Number(item.parent_id) === Number(comment.id)
+    );
+
+
+    replies.forEach(reply => {
+
+      const replyBox = document.createElement("div");
+
+      replyBox.className = "reply";
+
+      const replyUser = document.createElement("small");
+
+      replyUser.textContent = reply.username;
+
+      const replyContent = document.createElement("div");
+
+      replyContent.textContent = reply.content;
+
+      replyBox.append(
+        replyUser,
+        replyContent
+      );
+
+      box.appendChild(replyBox);
+    });
+
+
+    return box;
+  }
+
+
+  // بدء تشغيل الصفحة
+  async function initializePage() {
+
+    await checkLogin();
+
+    setupInfiniteScroll();
+
+    await loadShorts();
+  }
+
+
+  initializePage();
+
+</script>
+
+</body>
+</html>

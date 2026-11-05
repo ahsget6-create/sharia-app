@@ -1,372 +1,125 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متون طالب العلم لفضيلة الشيخ عبدالمحسن القاسم - منصة العلوم الشرعية</title>
-    <style>
-        :root {
-            --bg-dark: #090d16;
-            --bg-card: #111827;
-            --bg-card-hover: #1f2937;
-            --primary-blue: #0ea5e9;
-            --primary-teal: #10b981;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            direction: rtl;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* --- Header --- */
-        header {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 16px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .back-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 8px 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: var(--transition);
-        }
-
-        .back-btn:active {
-            transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .header-title h1 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #38bdf8, #34d399);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* --- Main Container --- */
-        .main-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 24px 16px 40px;
-        }
-
-        /* Hero Card */
-        .page-hero {
-            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 22px 18px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-        }
-
-        .page-hero h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #f1f5f9;
-        }
-
-        .page-hero p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* --- Levels & Mutun List --- */
-        .level-section {
-            margin-bottom: 28px;
-        }
-
-        .level-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #38bdf8;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 8px;
-        }
-
-        .mutun-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .matn-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .matn-card:hover, .matn-card:active {
-            background-color: var(--bg-card-hover);
-            border-color: rgba(56, 189, 248, 0.3);
-        }
-
-        .matn-info h3 {
-            font-size: 0.98rem;
-            font-weight: 700;
-            color: #f8fafc;
-            margin-bottom: 4px;
-        }
-
-        .matn-info p {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        .status-tag {
-            background: rgba(148, 163, 184, 0.1);
-            color: #94a3b8;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .status-tag.completed {
-            background: rgba(16, 185, 129, 0.15);
-            color: #34d399;
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متون طالب العلم - منصة العلوم الشرعية</title>
+  <style>
+    :root {
+      --bg:#101820; --panel:#182630; --panel2:#203440;
+      --text:#f2f5f3; --muted:#b8c7c7; --accent:#c5a66a;
+      --border:rgba(255,255,255,.10); --green:#45b58a;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Tahoma,Arial,sans-serif; line-height:1.8; }
+    header {
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      flex-wrap:wrap; padding:16px 5%; background:var(--panel); border-bottom:1px solid var(--border);
+    }
+    header h1 { margin:0; color:var(--accent); font-size:1.3rem; }
+    a { color:inherit; }
+    .back { text-decoration:none; border:1px solid var(--border); border-radius:9px; padding:7px 13px; }
+    main { width:min(1050px,94%); margin:28px auto 60px; }
+    .intro { text-align:center; padding:25px 16px; background:var(--panel); border:1px solid var(--border); border-radius:15px; margin-bottom:25px; }
+    .intro h2 { margin:0 0 8px; color:var(--accent); }
+    .intro p { margin:0; color:var(--muted); }
+    .level { margin:22px 0; }
+    .level-heading { display:flex; align-items:center; gap:10px; margin:0 0 13px; color:var(--accent); font-size:1.15rem; }
+    .level-heading::after { content:""; height:1px; background:var(--border); flex:1; }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:13px; }
+    .matn-card {
+      display:block; text-decoration:none; padding:17px; background:var(--panel);
+      border:1px solid var(--border); border-radius:13px; transition:.2s;
+    }
+    .matn-card:hover { transform:translateY(-3px); border-color:var(--accent); background:var(--panel2); }
+    .matn-card h3 { margin:0 0 7px; color:var(--text); font-size:1.05rem; }
+    .matn-card p { margin:0 0 13px; color:var(--muted); font-size:.9rem; }
+    .progress-row { display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:.82rem; color:var(--muted); }
+    .progress-track { height:6px; background:#0d151b; border-radius:10px; overflow:hidden; margin-top:8px; }
+    .progress-fill { height:100%; width:0; background:var(--green); border-radius:10px; }
+    .status { color:var(--accent); }
+    .status.done { color:var(--green); }
+    @media(max-width:520px) { header { justify-content:center; } .cards { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
+  <header>
+    <a class="back" href="index.html">الرئيسية</a>
+    <h1>📚 متون طالب العلم</h1>
+    <a class="back" href="schedule.html">جدول الحفظ</a>
+  </header>
 
-    <!-- Header -->
-    <header>
-        <a href="index.html" class="back-btn">➡️ الرئيسية</a>
-        <div class="header-title">
-            <h1>📖 متون طالب العلم</h1>
-        </div>
-    </header>
+  <main>
+    <section class="intro">
+      <h2>متون طالب العلم</h2>
+      <p>اختر المتن الذي تريد دراسته، وتابع تقدمك في الحفظ والمراجعة.</p>
+    </section>
 
-    <!-- Main Content -->
-    <main class="main-container">
+    <section class="level">
+      <h2 class="level-heading">المستوى الأول</h2>
+      <div class="cards">
+        <a class="matn-card" href="matn-detail.html?id=osol" data-matn-id="osol"><h3>الأصول الثلاثة</h3><p>أصول دين المسلم ومعرفة ربه ودينه ونبيه.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=qawaid" data-matn-id="qawaid"><h3>القواعد الأربع</h3><p>قواعد نافعة في بيان التوحيد والشرك.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=nawaqid" data-matn-id="nawaqid"><h3>نواقض الإسلام</h3><p>بيان نواقض الإسلام والتحذير منها.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=arbaain" data-matn-id="arbaain"><h3>الأربعون النووية</h3><p>أحاديث جامعة من جوامع كلم النبي ﷺ.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+      </div>
+    </section>
 
-        <!-- Hero -->
-        <div class="page-hero">
-            <h2>متون طالب العلم (للفضيلة الشيخ عبد المحسن القاسم)</h2>
-            <p>برنامج علمي متكامل لحفظ المتون المعتمدة في الفنون الشرعية لضبط العلم والتأصيل الرصين.</p>
-        </div>
+    <section class="level">
+      <h2 class="level-heading">المستوى الثاني</h2>
+      <div class="cards">
+        <a class="matn-card" href="matn-detail.html?id=tawheed" data-matn-id="tawheed"><h3>كتاب التوحيد</h3><p>أبواب في توحيد العبادة والتحذير من الشرك.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=shuroot" data-matn-id="shuroot"><h3>شروط الصلاة وأركانها وواجباتها</h3><p>متن في أهم مسائل الصلاة.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=adab_mashi" data-matn-id="adab_mashi"><h3>آداب المشي إلى الصلاة</h3><p>آداب وأحكام تتعلق بالصلاة.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=shubuhat" data-matn-id="shubuhat"><h3>كشف الشبهات</h3><p>بيان الشبهات والجواب عنها.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=umdat_ahkam" data-matn-id="umdat_ahkam"><h3>عمدة الأحكام</h3><p>أحاديث الأحكام من الصحيحين.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+      </div>
+    </section>
 
-        <div class="level-section">
-            <div class="level-title">📌 المستوى الأول</div>
-            <div class="mutun-list">
-                <a href="matn-detail.html?id=osol" class="matn-card" data-matn-id="osol">
-                    <div class="matn-info">
-                        <h3>ثلاثة الأصول وأدلتها</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=qawaid" class="matn-card" data-matn-id="qawaid">
-                    <div class="matn-info">
-                        <h3>القواعد الأربع</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=nawaqid" class="matn-card" data-matn-id="nawaqid">
-                    <div class="matn-info">
-                        <h3>نواقض الإسلام</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=arbaain" class="matn-card" data-matn-id="arbaain">
-                    <div class="matn-info">
-                        <h3>الأربعين النووية</h3>
-                        <p>الإمام النووي</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-            </div>
-        </div>
+    <section class="level">
+      <h2 class="level-heading">المستوى الثالث</h2>
+      <div class="cards">
+        <a class="matn-card" href="matn-detail.html?id=wasitiyyah" data-matn-id="wasitiyyah"><h3>العقيدة الواسطية</h3><p>متن في أصول الاعتقاد وأبواب الأسماء والصفات.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=baiqoniyah" data-matn-id="baiqoniyah"><h3>المنظومة البيقونية</h3><p>منظومة مختصرة في مصطلح الحديث.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=waraqat" data-matn-id="waraqat"><h3>الورقات</h3><p>مدخل مختصر إلى أصول الفقه.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=ajrumiyyah" data-matn-id="ajrumiyyah"><h3>الآجرومية</h3><p>متن مختصر في مبادئ علم النحو.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=tuhfat_atfal" data-matn-id="tuhfat_atfal"><h3>تحفة الأطفال</h3><p>منظومة في أحكام التجويد.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+      </div>
+    </section>
 
-        <div class="level-section">
-            <div class="level-title">📌 المستوى الثاني</div>
-            <div class="mutun-list">
-                <a href="matn-detail.html?id=tawheed" class="matn-card" data-matn-id="tawheed">
-                    <div class="matn-info">
-                        <h3>كتاب التوحيد</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=shuroot" class="matn-card" data-matn-id="shuroot">
-                    <div class="matn-info">
-                        <h3>شروط الصلاة وأركانها وواجباتها</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=adab_mashi" class="matn-card" data-matn-id="adab_mashi">
-                    <div class="matn-info">
-                        <h3>آداب المشي إلى الصلاة</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=shubuhat" class="matn-card" data-matn-id="shubuhat">
-                    <div class="matn-info">
-                        <h3>كشف الشبهات</h3>
-                        <p>الإمام محمد بن عبد الوهاب</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=umdat_ahkam" class="matn-card" data-matn-id="umdat_ahkam">
-                    <div class="matn-info">
-                        <h3>عمدة الأحكام</h3>
-                        <p>الإمام عبد الغني المقدسي</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-            </div>
-        </div>
+    <section class="level">
+      <h2 class="level-heading">المستوى الرابع</h2>
+      <div class="cards">
+        <a class="matn-card" href="matn-detail.html?id=bulugh" data-matn-id="bulugh"><h3>بلوغ المرام</h3><p>أحاديث الأحكام وأدلتها.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+        <a class="matn-card" href="matn-detail.html?id=rahbiyyah" data-matn-id="rahbiyyah"><h3>الرحبية</h3><p>منظومة في علم الفرائض والمواريث.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+      </div>
+    </section>
 
-        <div class="level-section">
-            <div class="level-title">📌 المستوى الثالث</div>
-            <div class="mutun-list">
-                <a href="matn-detail.html?id=wasitiyyah" class="matn-card" data-matn-id="wasitiyyah">
-                    <div class="matn-info">
-                        <h3>العقيدة الواسطية</h3>
-                        <p>شيخ الإسلام ابن تيمية</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=baiqoniyah" class="matn-card" data-matn-id="baiqoniyah">
-                    <div class="matn-info">
-                        <h3>البيقونية في مصطلح الحديث</h3>
-                        <p>الإمام عمر البيقوني</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=waraqat" class="matn-card" data-matn-id="waraqat">
-                    <div class="matn-info">
-                        <h3>الورقات في أصول الفقه</h3>
-                        <p>الإمام إمام الحرمين الجويني</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=ajrumiyyah" class="matn-card" data-matn-id="ajrumiyyah">
-                    <div class="matn-info">
-                        <h3>آجرومية في النحو</h3>
-                        <p>الإمام ابن آجروم</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=tuhfat_atfal" class="matn-card" data-matn-id="tuhfat_atfal">
-                    <div class="matn-info">
-                        <h3>تحفة الأطفال في تجويد القرآن</h3>
-                        <p>الشيخ سليمان الجمزوري</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-            </div>
-        </div>
+    <section class="level">
+      <h2 class="level-heading">المستوى الخامس</h2>
+      <div class="cards">
+        <a class="matn-card" href="matn-detail.html?id=alfiyyah" data-matn-id="alfiyyah"><h3>ألفية ابن مالك</h3><p>منظومة موسعة في علم النحو.</p><div class="progress-row"><span class="status">لم يبدأ بعد</span><span class="percent">0%</span></div><div class="progress-track"><div class="progress-fill"></div></div></a>
+      </div>
+    </section>
+  </main>
 
-        <div class="level-section">
-            <div class="level-title">📌 المستوى الرابع</div>
-            <div class="mutun-list">
-                <a href="matn-detail.html?id=bulugh" class="matn-card" data-matn-id="bulugh">
-                    <div class="matn-info">
-                        <h3>بلوغ المرام من أدلة الأحكام</h3>
-                        <p>الحافظ ابن حجر العسقلاني</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-                <a href="matn-detail.html?id=rahbiyyah" class="matn-card" data-matn-id="rahbiyyah">
-                    <div class="matn-info">
-                        <h3>الرحبية في الفرائض</h3>
-                        <p>الإمام أبو عبد الله الرحبي</p>
-                    </div>
-                    <span class="status-tag">غير مكتمل</span>
-                </a>
-            </div>
-        </div>
-
-        <div class="level-section">
-            <div class="level-title">📌 المستوى الخامس</div>
-            <div class="mutun-list">
-                <a href="matn-detail.html?id=alfiyyah" class="matn-card" data-matn-id="alfiyyah">
-    <div class="matn-info">
-        <h3>ألفية ابن مالك في النحو والصرف</h3>
-        <p>الإمام ابن مالك الطائي</p>
-    </div>
-    <span class="status-tag">غير مكتمل</span>
-</a>
-            </div>
-        </div>
-
-    </main>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const cards = document.querySelectorAll(".matn-card");
-        cards.forEach(card => {
-            const matnId = card.getAttribute("data-matn-id");
-            if (!matnId) return;
-
-            const statusTag = card.querySelector(".status-tag");
-            if (!statusTag) return;
-
-            const savedProgress = localStorage.getItem("progress_" + matnId);
-
-            if (savedProgress !== null) {
-                const percent = parseInt(savedProgress);
-                if (percent >= 100) {
-                    statusTag.textContent = "تم إكمال المتن ✅";
-                    statusTag.classList.add("completed");
-                } else if (percent > 0) {
-                    statusTag.textContent = percent + "%";
-                }
-            }
-        });
+  <script>
+    document.querySelectorAll('[data-matn-id]').forEach(card => {
+      const id = card.dataset.matnId;
+      const raw = Number.parseInt(localStorage.getItem('progress_' + id) || '0', 10);
+      const progress = Number.isFinite(raw) ? Math.max(0, Math.min(100, raw)) : 0;
+      const status = card.querySelector('.status');
+      card.querySelector('.percent').textContent = progress + '%';
+      card.querySelector('.progress-fill').style.width = progress + '%';
+      if (progress >= 100) {
+        status.textContent = 'مكتمل';
+        status.classList.add('done');
+      } else if (progress > 0) {
+        status.textContent = 'قيد الدراسة';
+      } else {
+        status.textContent = 'لم يبدأ بعد';
+      }
     });
-</script>
+  </script>
 </body>
 </html>
